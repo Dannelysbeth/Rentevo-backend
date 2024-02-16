@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  postgres:
+    image: mongo:latest
+    container_name: postgres
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - data:/data
+#    networks:
+#      - rentevo_network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: postgres
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: web:latest
+    container_name: rentevo-backend
+    links:
+      - postgres
+#    networks:
+#      - rentevo-backend
+    ports:
+      - "8080:8080"
+    expose:
+      - 8080
+    volumes:
+      - data:/data
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_started
+
+volumes:
+  data: {}
+
+networks:
+  default:
+    name: rentevo-backend
