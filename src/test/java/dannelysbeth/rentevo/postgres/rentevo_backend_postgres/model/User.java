@@ -10,9 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Getter
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue
     private Long id;
+
+    private String username;
+
+    private String password;
 
 }
