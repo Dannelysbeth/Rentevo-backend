@@ -19,4 +19,10 @@ public class User implements UserDetails {
 
     private String password;
 
+    private String email;
+
+    private String firstname;
+
+    private String lastname;
+
 }
