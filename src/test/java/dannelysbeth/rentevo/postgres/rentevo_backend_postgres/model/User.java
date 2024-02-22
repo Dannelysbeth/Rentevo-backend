@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Getter
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue
     private Long id;
