@@ -1,7 +1,9 @@
 package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,10 +14,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Getter
-public class Role {
+@Table(name = "countries")
+public class Country {
     @Id
+    @Column(name = "id")
     private Long id;
 
-    private String role;
-
+    @Column(name = "country_name")
+    private String countryName;
 }

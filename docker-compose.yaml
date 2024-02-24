@@ -12,7 +12,9 @@ services:
 #    networks:
 #      - rentevo_network
     environment:
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rentevo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
 #      MONGO_INITDB_ROOT_USERNAME: postgres
 #      MONGO_INITDB_ROOT_PASSWORD: password
 
