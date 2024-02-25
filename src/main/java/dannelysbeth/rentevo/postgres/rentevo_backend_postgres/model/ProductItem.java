@@ -3,6 +3,8 @@ package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,4 +32,13 @@ public class ProductItem {
     @Setter
     @Column(name = "price")
     private double price;
+
+    @Setter
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "variation_option_id")
+    @JoinTable(name = "product_configuration",
+            joinColumns = {@JoinColumn(name = "product_item_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "variation_option_id", referencedColumnName = "id")})
+    private Set<VariationOption> variationOptions;
+
 }

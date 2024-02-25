@@ -21,12 +21,16 @@ public class ProductCategory {
     private ProductCategory parentCategory;
 
     @Setter
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "promotion_id")
-    private Set<Promotion> promotionSet;
-
-    @Setter
     @Column(name = "category_name")
     private String categoryName;
+
+
+    @Setter
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "promotion_id")
+    @JoinTable(name = "promotion_categories",
+            joinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "promotion_id", referencedColumnName = "id")})
+    private Set<Promotion> promotionSet;
 
 }

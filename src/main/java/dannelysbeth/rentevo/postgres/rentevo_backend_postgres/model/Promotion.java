@@ -1,10 +1,7 @@
 package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Set;
@@ -35,7 +32,11 @@ public class Promotion {
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Set<ProductCategory> productCategories;
+
+//    @Setter
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
+//    @JoinTable(name = "promotion_categories",
+//            joinColumns = {@JoinColumn(name = "promotion_id", referencedColumnName = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "category_id", referencedColumnName = "id")})
+//    private Set<ProductCategory> productCategories;
 }

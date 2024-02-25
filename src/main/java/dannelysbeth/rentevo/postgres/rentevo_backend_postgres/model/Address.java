@@ -17,6 +17,14 @@ public class Address {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
+    private Country country;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Setter
     @Column(name = "unit_number")
     private int unitNumber;
@@ -41,7 +49,13 @@ public class Address {
     @Column(name = "postal_code")
     private String postalCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id")
-    private Country country;
+    @Setter
+    @Column(name = "is_default")
+    private boolean isDefault;
+
+
+
+
+
+
 }
