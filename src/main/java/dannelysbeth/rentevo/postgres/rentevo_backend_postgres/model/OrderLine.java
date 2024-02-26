@@ -8,25 +8,27 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Getter
-@Table(name="shopping_cart_items")
-public class ShoppingCartItem {
+@Table(name = "countries")
+public class OrderLine {
     @Id
-    @Column(name = "id")
+    @GeneratedValue
     private Long id;
 
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cart_id", nullable = false)
-    private ShoppingCart cart;
-
-    @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_item_id", nullable = false)
+    @JoinColumn(name = "product_item_id")
     private ProductItem productItem;
 
     @Setter
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private ShopOrder shopOrder;
+
+    @Setter
     @Column(name = "qty")
-    private int quantity;
+    private int qty;
 
-
+    @Setter
+    @Column(name = "price")
+    private double price;
 }
