@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Getter
-@Table(name = "variation_options")
+@Table(name = "varation_options")
 public class VariationOption {
 
     @Id

@@ -32,11 +32,11 @@ public class UserPaymentMethod {
     private String accountNumber;
 
     @Setter
-    @Column(name = "account_number")
+    @Column(name = "expiry_date")
     private Date expiry_date;
 
     @Setter
-    @Column(name = "account_number")
+    @Column(name = "is_default")
     private boolean isDefault;
 
 
