@@ -8,5 +8,9 @@ public class UserNotFoundException extends BusinessException {
         super(STR. "user \{ username } not found" ,
                 HttpStatus.NOT_FOUND.value());
     }
+    public UserNotFoundException() {
+        super("User for given username not found" ,
+                HttpStatus.NOT_FOUND.value());
+    }
 
 }
