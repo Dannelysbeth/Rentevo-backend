@@ -5,7 +5,9 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.repository.UserRepository;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.definition.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
