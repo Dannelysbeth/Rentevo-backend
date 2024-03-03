@@ -1,12 +1,12 @@
 package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.api.handlers.DTO.ErrorResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import org.springframework.web.ErrorResponse;
 
 import java.io.IOException;
 
