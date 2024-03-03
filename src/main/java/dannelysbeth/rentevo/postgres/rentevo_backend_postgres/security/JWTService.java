@@ -44,7 +44,7 @@ public class JWTService {
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-    private boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String username = extractUsernameFromToken(token);
         return Objects.equals(username, userDetails.getUsername()) && !isTokenExpired((token));
     }
