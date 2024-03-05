@@ -4,7 +4,9 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.auth.DTO.request.A
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.auth.DTO.request.RegisterRequest;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.auth.DTO.response.AuthenticationResponse;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.enums.Role;
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.EmailExistsException;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.UserNotFoundException;
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.UsernameAlreadyTakenException;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.repository.UserRepository;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.security.JWTService;
@@ -53,13 +55,13 @@ public class AuthService {
                 .build();
     }
 
+
     private void verifyRequestCorrectness(RegisterRequest request) {
-        // TODO
-//        if (userRepository.existsByEmail(request.getEmail())) {
-//            throw new EmailExistsException();
-//        }
-//        if (userRepository.existsByUsername(request.getUsername())) {
-//            throw new UsernameAlreadyTakenException();
-//        }
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new EmailExistsException();
+        }
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw new UsernameAlreadyTakenException();
+        }
     }
 }
