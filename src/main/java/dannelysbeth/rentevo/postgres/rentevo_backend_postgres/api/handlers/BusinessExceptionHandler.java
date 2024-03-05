@@ -2,6 +2,7 @@ package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.api.handlers;
 
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.api.handlers.DTO.ErrorResponse;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.BusinessException;
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,5 +17,11 @@ public class BusinessExceptionHandler {
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     public ErrorResponse handleAnyException(AccessDeniedException exception, WebRequest request) {
         return new ErrorResponse(new BusinessException(exception.getMessage(), HttpStatus.FORBIDDEN.value()));
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ErrorResponse handleUserNotFoundException(UserNotFoundException exception) {
+        return new ErrorResponse(exception);
     }
 }
