@@ -35,7 +35,6 @@ public class ProductItem {
 
     @Setter
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "variation_option_id")
     @JoinTable(name = "product_configuration",
             joinColumns = {@JoinColumn(name = "product_item_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "variation_option_id", referencedColumnName = "id")})
