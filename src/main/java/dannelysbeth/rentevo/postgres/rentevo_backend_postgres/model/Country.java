@@ -14,8 +14,8 @@ import lombok.*;
 @Table(name = "countries")
 public class Country {
     @Id
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "code")
+    private String code;
 
     @Setter
     @Column(name = "country_name")
