@@ -4,10 +4,7 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.Country;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.definition.CountryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
@@ -23,6 +20,14 @@ public class CountryController {
                                                 @RequestParam(required = false) String code) {
         return ResponseEntity.ok()
                 .body(countryService.findAll(startsWith, code));
+
+    }
+
+    @PostMapping
+    public ResponseEntity<String> importCountries(@RequestBody Set<Country> countries) {
+        countryService.importCountries(countries);
+        return ResponseEntity.ok()
+                .body("Countries imported successfully");
 
     }
 

@@ -30,4 +30,14 @@ public class CountryServiceImpl implements CountryService {
                 .map(countryMapper::toDto)
                 .collect(Collectors.toSet());
     }
+
+    @Override
+    public void importCountry(Country country) {
+        countryRepository.save(country);
+    }
+
+    @Override
+    public void importCountries(Set<Country> countries) {
+        countryRepository.saveAll(countries);
+    }
 }
