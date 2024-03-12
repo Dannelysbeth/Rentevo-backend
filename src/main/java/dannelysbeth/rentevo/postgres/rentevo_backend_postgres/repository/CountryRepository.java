@@ -10,5 +10,5 @@ import java.util.Set;
 
 @Repository
 public interface CountryRepository extends JpaRepository<Country, String>, JpaSpecificationExecutor<Country> {
-    Optional<Country> getCountryByCountryNameIgnoreCase(String country);
+    Optional<Country> getCountryByCountryIgnoreCase(String country);
 }

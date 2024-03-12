@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Getter
-@Table(name = "countries")
+@Table(name = "order_lines")
 public class OrderLine {
     @Id
     @GeneratedValue

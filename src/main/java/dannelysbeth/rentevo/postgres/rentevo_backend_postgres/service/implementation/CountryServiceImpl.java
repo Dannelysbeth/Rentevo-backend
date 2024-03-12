@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,13 +23,10 @@ public class CountryServiceImpl implements CountryService {
     private final CountryMapper countryMapper;
 
     @Override
-    public Set<Country> findAll(String name, String code) {
-        Specification<Country> filters = Specification.where(StringUtils.isEmpty(name) ? null : startsWithName(name))
-                .and(StringUtils.isEmpty(code) ? null : startsWithCode(code));
-        return countryRepository.findAll(filters)
-                .stream()
-                .map(countryMapper::toDto)
-                .collect(Collectors.toSet());
+    public Set<Country> findAll(String country, String code) {
+        Specification<Country> filters = Specification.where(country == null ? null : startsWithName(country))
+                .and(code == null ? null : startsWithCode(code));
+        return new HashSet<>(countryRepository.findAll(filters));
     }
 
     @Override

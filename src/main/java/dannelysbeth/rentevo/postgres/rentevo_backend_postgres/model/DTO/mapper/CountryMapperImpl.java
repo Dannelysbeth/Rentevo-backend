@@ -14,7 +14,7 @@ public class CountryMapperImpl implements CountryMapper {
 
         Country countryDto = new Country();
 
-        countryDto.setCountryName( country.getCountryName() );
+        countryDto.setCountry( country.getCountry() );
 
         return countryDto;
     }

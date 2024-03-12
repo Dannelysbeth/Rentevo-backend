@@ -14,10 +14,10 @@ import lombok.*;
 @Table(name = "countries")
 public class Country {
     @Id
-    @Column(name = "id")
+    @Column(name = "code")
     private String code;
 
     @Setter
-    @Column(name = "name")
-    private String countryName;
+    @Column(name = "country")
+    private String country;
 }
