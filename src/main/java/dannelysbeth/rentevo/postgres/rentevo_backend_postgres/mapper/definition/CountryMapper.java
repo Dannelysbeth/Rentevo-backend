@@ -1,4 +1,4 @@
-package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.DTO.mapper;
+package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.mapper.definition;
 
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.Country;
 import org.mapstruct.Mapper;

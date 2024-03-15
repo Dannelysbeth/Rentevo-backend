@@ -1,5 +1,6 @@
-package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.DTO.mapper;
+package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.mapper.implementation;
 
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.mapper.definition.CountryMapper;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.Country;
 import org.springframework.stereotype.Component;
 
