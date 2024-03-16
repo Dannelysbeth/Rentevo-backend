@@ -14,7 +14,5 @@ import java.util.Set;
 public interface AddressRepository extends JpaRepository<Address, Long>, JpaSpecificationExecutor<Address> {
     Set<Address> getAddressesByUser(User user);
 
-    <T> List<Address> findAllByUser(User user, Specification<T> spec);
-
-    void updateById(Long id, Address address);
+//    <T> List<Address> findAll(User user, Specification<T> spec);
 }

@@ -26,7 +26,7 @@ public class AddressServiceImpl implements AddressService {
     public Set<Address> getAddressByUser(User user, String cityStartsWith, String countryStartsWith) {
         Specification<Address> filters = Specification.where(cityStartsWith == null ? null : cityStartsWith(cityStartsWith))
                 .and(countryStartsWith == null ? null : countryStartsWith(countryStartsWith));
-        return new HashSet<>(addressRepository.findAllByUser(user, filters));
+        return new HashSet<>(addressRepository.findAll(filters));
     }
 
     @Override
@@ -36,6 +36,6 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void updateAddress(Long id, Address newAddress) {
-        addressRepository.updateById(id, newAddress);
+
     }
 }
