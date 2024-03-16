@@ -5,6 +5,8 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.repository.UserRepository;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.definition.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +20,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public User getLoggedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            String username = ((UserDetails) principal).getUsername();
+            return this.getByUsername(username);
+        }
+        return null;
+    }
+
+    @Override
+    public User getByUsername(String username) {
         return userRepository.getUserByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 }

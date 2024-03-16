@@ -4,12 +4,13 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.mapper.definition.
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.Address;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.DTO.request.AddressRequest;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.DTO.response.AddressResponse;
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AddressMapperImpl implements AddressMapper {
     @Override
-    public Address tranformRequestToAddress(AddressRequest request) {
+    public Address tranformRequestToAddress(AddressRequest request, User user) {
         return Address.builder()
                 .country(request.getCountry())
                 .city(request.getCity())
@@ -17,6 +18,7 @@ public class AddressMapperImpl implements AddressMapper {
                 .addressLine2(request.getAddressLine2())
                 .streetNumber(request.getStreetNumber())
                 .postalCode(request.getPostalCode())
+                .user(user)
                 .build();
     }
 
