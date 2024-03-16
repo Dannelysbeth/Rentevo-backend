@@ -1,7 +1,6 @@
 package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.filters;
 
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.Address;
-import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.Country;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 

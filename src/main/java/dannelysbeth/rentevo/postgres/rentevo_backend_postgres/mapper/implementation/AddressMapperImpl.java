@@ -23,7 +23,10 @@ public class AddressMapperImpl implements AddressMapper {
     @Override
     public AddressResponse transformAddressToResponse(Address address) {
         return AddressResponse.builder()
-                .user(address.getUser())
+                .user(AddressResponse.Person.builder()
+                        .firstname(address.getUser().getFirstname())
+                        .lastname(address.getUser().getLastname())
+                        .build())
                 .isDefault(address.isDefault())
                 .country(address.getCountry())
                 .city(address.getCity())

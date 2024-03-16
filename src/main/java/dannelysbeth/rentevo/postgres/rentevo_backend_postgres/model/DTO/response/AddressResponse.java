@@ -5,11 +5,18 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
 import lombok.Builder;
 import lombok.Data;
 
+
+
 @Data
 @Builder
 public class AddressResponse {
+    @Builder
+    public static class Person {
+        String firstname;
+        String lastname;
+    }
     Country country;
-    User user;
+    Person user;
     int unitNumber;
     int streetNumber;
     String addressLine1;
