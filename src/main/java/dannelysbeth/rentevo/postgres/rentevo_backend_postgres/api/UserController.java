@@ -17,4 +17,11 @@ public class UserController {
         return ResponseEntity.ok()
                 .body(userService.getUserById(Long.getLong(id)));
     }
+
+    @GetMapping()
+    ResponseEntity<User> getLoggedUser() {
+
+        return ResponseEntity.ok()
+                .body(userService.getLoggedUser());
+    }
 }
