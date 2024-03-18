@@ -8,11 +8,13 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.definition
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.definition.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/address")
@@ -21,6 +23,7 @@ public class AddressController {
     private final UserService userService;
     private final AddressMapper addressMapper;
 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     @GetMapping("/{username}")
     public ResponseEntity<Set<AddressResponse>> getAddresses(@RequestParam(required=false) String city,
                                                              @RequestParam(required=false) String country,
@@ -34,6 +37,7 @@ public class AddressController {
                         .collect(Collectors.toSet()));
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
     @PostMapping()
     public ResponseEntity<String> saveOwnAddresses(@RequestBody AddressRequest addressRequest) {
         User loggedUser = userService.getLoggedUser();

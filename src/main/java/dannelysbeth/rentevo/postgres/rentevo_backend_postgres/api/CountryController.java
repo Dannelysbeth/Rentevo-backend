@@ -4,10 +4,12 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.Country;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.definition.CountryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/country")
