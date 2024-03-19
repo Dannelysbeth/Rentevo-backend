@@ -9,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -32,5 +34,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByUsername(String username) {
         return userRepository.getUserByUsername(username).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public Set<User> getAllUsers() {
+        return (Set<User>) userRepository.findAll();
     }
 }

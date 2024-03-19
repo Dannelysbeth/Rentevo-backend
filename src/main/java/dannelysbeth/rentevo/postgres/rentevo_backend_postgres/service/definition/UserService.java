@@ -4,6 +4,8 @@ package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.definitio
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public interface UserService {
     User getUserById(Long id);
@@ -11,4 +13,6 @@ public interface UserService {
     User getLoggedUser();
 
     User getByUsername(String username);
+
+    Set<User> getAllUsers();
 }

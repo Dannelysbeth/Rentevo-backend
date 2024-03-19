@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -15,7 +17,7 @@ public class UserController {
 
     UserService userService;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping("/{id}")
     ResponseEntity<User> getUserById(@PathVariable String id) {
 
@@ -23,11 +25,20 @@ public class UserController {
                 .body(userService.getUserById(Long.getLong(id)));
     }
 
+
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping()
     ResponseEntity<User> getLoggedUser() {
 
         return ResponseEntity.ok()
                 .body(userService.getLoggedUser());
+    }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @GetMapping("/all")
+    ResponseEntity<Set<User>> getAllUsers() {
+
+        return ResponseEntity.ok()
+                .body(userService.getAllUsers());
     }
 }
