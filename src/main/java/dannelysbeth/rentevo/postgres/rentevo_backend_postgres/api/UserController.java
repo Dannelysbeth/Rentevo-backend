@@ -25,7 +25,6 @@ public class UserController {
                 .body(userService.getUserById(Long.getLong(id)));
     }
 
-
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping()
     ResponseEntity<User> getLoggedUser() {
@@ -36,7 +35,8 @@ public class UserController {
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/all")
-    ResponseEntity<Set<User>> getAllUsers() {
+    ResponseEntity<Set<User>> getAllUsers(@RequestParam(required = false) String startsWith,
+                                          @RequestParam(required = false) String code) {
 
         return ResponseEntity.ok()
                 .body(userService.getAllUsers());
