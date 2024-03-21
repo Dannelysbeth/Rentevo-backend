@@ -5,6 +5,7 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.auth.DTO.request.R
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.auth.DTO.response.AuthenticationResponse;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.enums.Role;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.EmailExistsException;
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.IncorrectPasswordException;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.UserNotFoundException;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.UsernameAlreadyTakenException;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
@@ -47,7 +48,7 @@ public class AuthService {
                 .orElseThrow(UserNotFoundException::new));
         boolean decoded = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!decoded) {
-            //TODO password exception
+            throw new IncorrectPasswordException();
         }
         String jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()

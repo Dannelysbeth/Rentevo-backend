@@ -12,20 +12,20 @@ import java.util.Set;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
-    UserService userService;
+    private final UserService userService;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    @GetMapping("/{id}")
-    ResponseEntity<User> getUserById(@PathVariable String id) {
+    @PreAuthorize("hasAnyAuthority('ADMIN_ROLE')")
+    @GetMapping("/{username}")
+    ResponseEntity<User> getUserByUsername(@PathVariable String username) {
 
         return ResponseEntity.ok()
-                .body(userService.getUserById(Long.getLong(id)));
+                .body(userService.getByUsername(username));
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('USER_ROLE', 'ADMIN_ROLE')")
     @GetMapping()
     ResponseEntity<User> getLoggedUser() {
 
@@ -33,7 +33,7 @@ public class UserController {
                 .body(userService.getLoggedUser());
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('USER_ROLE', 'ADMIN_ROLE')")
     @GetMapping("/all")
     ResponseEntity<Set<User>> getAllUsers(@RequestParam(required = false) String startsWith,
                                           @RequestParam(required = false) String code) {
