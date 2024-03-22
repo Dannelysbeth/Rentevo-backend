@@ -1,5 +1,8 @@
 package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum PaymentType {
     CREDIT_CARD("Credit Card"),
     DEBIT_CARD("Debit Card"),
@@ -14,7 +17,4 @@ public enum PaymentType {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
 }

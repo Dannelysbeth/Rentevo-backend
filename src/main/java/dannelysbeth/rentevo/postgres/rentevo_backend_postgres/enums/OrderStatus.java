@@ -1,5 +1,8 @@
 package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum OrderStatus {
     PENDING("Pending Payment"),
     PROCESSING("Processing"),
@@ -13,7 +16,4 @@ public enum OrderStatus {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
 }
