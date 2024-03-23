@@ -4,6 +4,6 @@ import org.springframework.http.HttpStatus;
 
 public class IncorrectPasswordException extends BusinessException {
     public IncorrectPasswordException() {
-        super("Wrong password!", HttpStatus.NOT_ACCEPTABLE.value());
+        super("Wrong password!", HttpStatus.UNAUTHORIZED.value());
     }
 }
