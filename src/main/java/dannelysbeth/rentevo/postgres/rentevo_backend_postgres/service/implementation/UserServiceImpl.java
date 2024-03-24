@@ -5,17 +5,23 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.repository.UserRepository;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.definition.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.Set;
+
+import static dannelysbeth.rentevo.postgres.rentevo_backend_postgres.filters.UserSpecification.startsWithFirstname;
+import static dannelysbeth.rentevo.postgres.rentevo_backend_postgres.filters.UserSpecification.startsWithLastname;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
     @Override
     public User getUserById(Long id) {
         return userRepository.getReferenceById(id);
@@ -37,7 +43,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Set<User> getAllUsers() {
-        return (Set<User>) userRepository.findAll();
+    public Set<User> findAllUsers(String firstname, String lastname) {
+        Specification<User> filters = Specification.where(lastname == null ? null : startsWithLastname(lastname))
+                .and(firstname == null ? null : startsWithFirstname(firstname));
+        return new HashSet<>(userRepository.findAll(filters));
     }
 }

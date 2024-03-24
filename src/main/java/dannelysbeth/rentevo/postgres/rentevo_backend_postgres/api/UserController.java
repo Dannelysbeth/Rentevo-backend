@@ -35,10 +35,10 @@ public class UserController {
 
     @PreAuthorize("hasAnyAuthority('USER_ROLE', 'ADMIN_ROLE')")
     @GetMapping("/all")
-    ResponseEntity<Set<User>> getAllUsers(@RequestParam(required = false) String startsWith,
-                                          @RequestParam(required = false) String code) {
+    ResponseEntity<Set<User>> getAllUsers(@RequestParam(required = false) String firstname,
+                                          @RequestParam(required = false) String lastname) {
 
         return ResponseEntity.ok()
-                .body(userService.getAllUsers());
+                .body(userService.findAllUsers(firstname, lastname));
     }
 }

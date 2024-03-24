@@ -14,5 +14,5 @@ public interface UserService {
 
     User getByUsername(String username);
 
-    Set<User> getAllUsers();
+    Set<User> findAllUsers(String firstname, String lastname);
 }
