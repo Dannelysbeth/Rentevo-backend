@@ -5,7 +5,10 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.mapper.definition.
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.DTO.request.UserRequest;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.DTO.response.UserResponse;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
+import org.springframework.stereotype.Component;
 
+
+@Component
 public class UserMapperImpl implements UserMapper {
     @Override
     public User tranformRequestToUser(UserRequest request, String encodedPassword, Role role) {

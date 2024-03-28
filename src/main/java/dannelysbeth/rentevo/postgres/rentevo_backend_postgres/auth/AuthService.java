@@ -8,6 +8,8 @@ import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.EmailExi
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.IncorrectPasswordException;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.UserNotFoundException;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.UsernameAlreadyTakenException;
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.mapper.definition.UserMapper;
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.DTO.request.UserRequest;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.repository.UserRepository;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.security.JWTService;
@@ -15,6 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.function.EntityResponse;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +27,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JWTService jwtService;
+    private final UserMapper userMapper;
 
     public AuthenticationResponse register(RegisterRequest request) {
         verifyRequestCorrectness(request);
@@ -54,6 +60,14 @@ public class AuthService {
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();
+    }
+
+    public void importMultipleUsers(Set<UserRequest> requests) {
+        requests.forEach(req-> {
+            userRepository.save(userMapper.tranformRequestToUser(req,
+                    passwordEncoder.encode(req.getUsername()),
+                    Role.USER_ROLE));
+        });
     }
 
 

@@ -1,5 +1,6 @@
 package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.api;
 
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.DTO.request.UserRequest;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.definition.UserService;
 import lombok.RequiredArgsConstructor;
@@ -41,4 +42,13 @@ public class UserController {
         return ResponseEntity.ok()
                 .body(userService.findAllUsers(firstname, lastname));
     }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN_ROLE')")
+    @PostMapping("/import")
+    ResponseEntity<String> importUsers(@RequestBody Set<UserRequest> requests) {
+        userService.importUsers(requests);
+        return ResponseEntity.ok()
+                .body("Users imported successfully");
+    }
+
 }

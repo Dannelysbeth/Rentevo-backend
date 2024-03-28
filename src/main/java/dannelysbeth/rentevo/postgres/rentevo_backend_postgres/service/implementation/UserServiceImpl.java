@@ -1,6 +1,8 @@
 package dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.implementation;
 
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.auth.AuthService;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.exception.UserNotFoundException;
+import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.DTO.request.UserRequest;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.model.User;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.repository.UserRepository;
 import dannelysbeth.rentevo.postgres.rentevo_backend_postgres.service.definition.UserService;
@@ -21,6 +23,7 @@ import static dannelysbeth.rentevo.postgres.rentevo_backend_postgres.filters.Use
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final AuthService authService;
 
     @Override
     public User getUserById(Long id) {
@@ -48,4 +51,10 @@ public class UserServiceImpl implements UserService {
                 .and(firstname == null ? null : startsWithFirstname(firstname));
         return new HashSet<>(userRepository.findAll(filters));
     }
+
+    @Override
+    public void importUsers(Set<UserRequest> requests) {
+        this.authService.importMultipleUsers(requests);
+    }
+
 }
