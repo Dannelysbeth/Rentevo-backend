@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dannelysbeth.rentevo.postgres</groupId>
-    <artifactId>rentevo_backend_postgres</artifactId>
+    <artifactId>rentevo_backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>rentevo_backend_postgres</name>
     <description>rentevo_backend_postgres</description>
