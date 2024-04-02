@@ -1,4 +1,4 @@
-package dannelysbeth.rentevo.rentevo_backend.postgres.enums;
+package dannelysbeth.rentevo.rentevo_backend.enums;
 
 import lombok.Getter;
 

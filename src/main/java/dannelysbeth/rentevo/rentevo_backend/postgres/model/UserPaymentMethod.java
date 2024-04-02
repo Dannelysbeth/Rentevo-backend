@@ -1,6 +1,6 @@
 package dannelysbeth.rentevo.rentevo_backend.postgres.model;
 
-import dannelysbeth.rentevo.rentevo_backend.postgres.enums.PaymentType;
+import dannelysbeth.rentevo.rentevo_backend.enums.PaymentType;
 import jakarta.persistence.*;
 import lombok.*;
 

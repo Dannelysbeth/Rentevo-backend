@@ -1,7 +1,7 @@
 package dannelysbeth.rentevo.rentevo_backend.postgres.model;
 
 
-import dannelysbeth.rentevo.rentevo_backend.postgres.enums.Role;
+import dannelysbeth.rentevo.rentevo_backend.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

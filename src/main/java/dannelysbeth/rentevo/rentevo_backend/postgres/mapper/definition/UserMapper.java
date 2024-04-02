@@ -1,6 +1,6 @@
 package dannelysbeth.rentevo.rentevo_backend.postgres.mapper.definition;
 
-import dannelysbeth.rentevo.rentevo_backend.postgres.enums.Role;
+import dannelysbeth.rentevo.rentevo_backend.enums.Role;
 import dannelysbeth.rentevo.rentevo_backend.postgres.model.DTO.request.UserRequest;
 import dannelysbeth.rentevo.rentevo_backend.postgres.model.DTO.response.UserResponse;
 import dannelysbeth.rentevo.rentevo_backend.postgres.model.User;

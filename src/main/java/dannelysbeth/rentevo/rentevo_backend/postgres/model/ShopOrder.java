@@ -1,6 +1,6 @@
 package dannelysbeth.rentevo.rentevo_backend.postgres.model;
 
-import dannelysbeth.rentevo.rentevo_backend.postgres.enums.OrderStatus;
+import dannelysbeth.rentevo.rentevo_backend.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
