@@ -1,7 +1,7 @@
 package dannelysbeth.ecommerce.postgres.api;
 
-import dannelysbeth.ecommerce.postgres.postgres.model.DTO.request.UserRequest;
-import dannelysbeth.ecommerce.postgres.postgres.model.User;
+import dannelysbeth.ecommerce.postgres.model.DTO.request.UserRequest;
+import dannelysbeth.ecommerce.postgres.model.User;
 import dannelysbeth.ecommerce.postgres.service.definition.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

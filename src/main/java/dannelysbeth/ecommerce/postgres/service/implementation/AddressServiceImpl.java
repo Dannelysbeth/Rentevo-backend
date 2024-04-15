@@ -1,9 +1,9 @@
 package dannelysbeth.ecommerce.postgres.service.implementation;
 
-import dannelysbeth.ecommerce.postgres.postgres.filters.AddressSpecification;
-import dannelysbeth.ecommerce.postgres.postgres.model.Address;
-import dannelysbeth.ecommerce.postgres.postgres.model.User;
-import dannelysbeth.ecommerce.postgres.postgres.repository.AddressRepository;
+import dannelysbeth.ecommerce.postgres.filters.AddressSpecification;
+import dannelysbeth.ecommerce.postgres.model.Address;
+import dannelysbeth.ecommerce.postgres.model.User;
+import dannelysbeth.ecommerce.postgres.repository.AddressRepository;
 import dannelysbeth.ecommerce.postgres.service.definition.AddressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;

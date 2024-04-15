@@ -1,7 +1,7 @@
 package dannelysbeth.ecommerce.postgres.service.definition;
 
-import dannelysbeth.ecommerce.postgres.postgres.model.Address;
-import dannelysbeth.ecommerce.postgres.postgres.model.User;
+import dannelysbeth.ecommerce.postgres.model.Address;
+import dannelysbeth.ecommerce.postgres.model.User;
 
 import java.util.Set;
 

@@ -1,9 +1,9 @@
 package dannelysbeth.ecommerce.postgres.api;
 
-import dannelysbeth.ecommerce.postgres.postgres.mapper.definition.AddressMapper;
-import dannelysbeth.ecommerce.postgres.postgres.model.DTO.request.AddressRequest;
-import dannelysbeth.ecommerce.postgres.postgres.model.DTO.response.AddressResponse;
-import dannelysbeth.ecommerce.postgres.postgres.model.User;
+import dannelysbeth.ecommerce.postgres.mapper.definition.AddressMapper;
+import dannelysbeth.ecommerce.postgres.model.DTO.request.AddressRequest;
+import dannelysbeth.ecommerce.postgres.model.DTO.response.AddressResponse;
+import dannelysbeth.ecommerce.postgres.model.User;
 import dannelysbeth.ecommerce.postgres.service.definition.AddressService;
 import dannelysbeth.ecommerce.postgres.service.definition.UserService;
 import lombok.RequiredArgsConstructor;

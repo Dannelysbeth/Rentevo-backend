@@ -2,10 +2,10 @@ package dannelysbeth.ecommerce.postgres.service.implementation;
 
 import dannelysbeth.ecommerce.postgres.auth.AuthService;
 import dannelysbeth.ecommerce.postgres.exception.UserNotFoundException;
-import dannelysbeth.ecommerce.postgres.postgres.filters.UserSpecification;
-import dannelysbeth.ecommerce.postgres.postgres.model.DTO.request.UserRequest;
-import dannelysbeth.ecommerce.postgres.postgres.model.User;
-import dannelysbeth.ecommerce.postgres.postgres.repository.UserRepository;
+import dannelysbeth.ecommerce.postgres.filters.UserSpecification;
+import dannelysbeth.ecommerce.postgres.model.DTO.request.UserRequest;
+import dannelysbeth.ecommerce.postgres.model.User;
+import dannelysbeth.ecommerce.postgres.repository.UserRepository;
 import dannelysbeth.ecommerce.postgres.service.definition.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;

@@ -1,8 +1,8 @@
 package dannelysbeth.ecommerce.postgres.service.definition;
 
 
-import dannelysbeth.ecommerce.postgres.postgres.model.DTO.request.UserRequest;
-import dannelysbeth.ecommerce.postgres.postgres.model.User;
+import dannelysbeth.ecommerce.postgres.model.DTO.request.UserRequest;
+import dannelysbeth.ecommerce.postgres.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;

@@ -1,6 +1,6 @@
 package dannelysbeth.ecommerce.postgres.service.definition;
 
-import dannelysbeth.ecommerce.postgres.postgres.model.Country;
+import dannelysbeth.ecommerce.postgres.model.Country;
 
 import java.util.Set;
 

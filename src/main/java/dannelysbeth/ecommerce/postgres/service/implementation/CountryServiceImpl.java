@@ -1,8 +1,8 @@
 package dannelysbeth.ecommerce.postgres.service.implementation;
 
-import dannelysbeth.ecommerce.postgres.postgres.mapper.definition.CountryMapper;
-import dannelysbeth.ecommerce.postgres.postgres.model.Country;
-import dannelysbeth.ecommerce.postgres.postgres.repository.CountryRepository;
+import dannelysbeth.ecommerce.postgres.mapper.definition.CountryMapper;
+import dannelysbeth.ecommerce.postgres.model.Country;
+import dannelysbeth.ecommerce.postgres.repository.CountryRepository;
 import dannelysbeth.ecommerce.postgres.service.definition.CountryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Set;
 
-import static dannelysbeth.ecommerce.postgres.postgres.filters.CountrySpecification.startsWithCode;
-import static dannelysbeth.ecommerce.postgres.postgres.filters.CountrySpecification.startsWithName;
+import static dannelysbeth.ecommerce.postgres.filters.CountrySpecification.startsWithCode;
+import static dannelysbeth.ecommerce.postgres.filters.CountrySpecification.startsWithName;
 
 @Service
 @RequiredArgsConstructor

@@ -2,7 +2,7 @@ package dannelysbeth.ecommerce.postgres.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dannelysbeth.ecommerce.postgres.api.handlers.DTO.ErrorResponse;
-import dannelysbeth.ecommerce.postgres.postgres.model.User;
+import dannelysbeth.ecommerce.postgres.model.User;
 import dannelysbeth.ecommerce.postgres.service.definition.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

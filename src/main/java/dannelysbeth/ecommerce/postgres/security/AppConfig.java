@@ -1,7 +1,7 @@
 package dannelysbeth.ecommerce.postgres.security;
 
 import dannelysbeth.ecommerce.postgres.exception.UserNotFoundException;
-import dannelysbeth.ecommerce.postgres.postgres.repository.UserRepository;
+import dannelysbeth.ecommerce.postgres.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

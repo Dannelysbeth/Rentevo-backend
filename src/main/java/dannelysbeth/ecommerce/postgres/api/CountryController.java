@@ -1,6 +1,6 @@
 package dannelysbeth.ecommerce.postgres.api;
 
-import dannelysbeth.ecommerce.postgres.postgres.model.Country;
+import dannelysbeth.ecommerce.postgres.model.Country;
 import dannelysbeth.ecommerce.postgres.service.definition.CountryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
