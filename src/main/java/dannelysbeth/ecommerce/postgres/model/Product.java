@@ -11,23 +11,21 @@ import lombok.*;
 @Table(name = "products")
 public class Product {
     @Id
-    @GeneratedValue
-    private Long id;
-
-    @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private ProductCategory productCategory;
+    private String id;
 
     @Setter
     @Column(name = "name")
     private String name;
 
     @Setter
+    @Column(name = "category")
+    private String category;
+
+    @Setter
     @Column(name = "description")
     private String description;
 
     @Setter
-    @Column(name = "product_image")
-    private String imageUrl;
+    @Column(name = "price")
+    private double price;
 }

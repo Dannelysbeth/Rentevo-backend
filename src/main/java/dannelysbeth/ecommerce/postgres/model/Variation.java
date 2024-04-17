@@ -16,11 +16,6 @@ public class Variation {
     private Long id;
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private ProductCategory productCategory;
-
-    @Setter
     @Column(name = "name")
-    private String name;
+    private String parameter;
 }
