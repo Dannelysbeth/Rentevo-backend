@@ -24,7 +24,7 @@ public class ProductRequest {
 
     long quantityInStock;
 
-    long SKU;
+    String SKU;
 
 }
 

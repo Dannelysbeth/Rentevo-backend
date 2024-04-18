@@ -2,6 +2,9 @@ package dannelysbeth.ecommerce.postgres.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.mapping.List;
+
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -18,4 +21,8 @@ public class Variation {
     @Setter
     @Column(name = "name")
     private String parameter;
+
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<VariationOption> variationOptions;
 }

@@ -4,6 +4,10 @@ import dannelysbeth.ecommerce.postgres.exception.FileInputException;
 import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.Feature;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
+import dannelysbeth.ecommerce.postgres.model.Product;
+import dannelysbeth.ecommerce.postgres.model.ProductItem;
+import dannelysbeth.ecommerce.postgres.model.Variation;
+import dannelysbeth.ecommerce.postgres.model.VariationOption;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -33,6 +37,34 @@ public class ProductMapperImpl implements ProductMapper {
         } catch (ParseException e) {
             throw new FileInputException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<ProductItem> transformFromRequest(List<ProductRequest> requests) {
+        return requests.forEach(req -> {
+            ProductItem.builder()
+                    .product(Product.builder()
+                            .id(req.getProductCode())
+                            .category(req.getCategory())
+                            .description(req.getDescription())
+                            .price(req.getPrice())
+                            .name(req.getName())
+                            .build())
+                    .sku(req.getSKU())
+                    .variationOptions(req.getFeatures())
+                    .quantityInStock(req.getQuantityInStock())
+                    .build()
+        });
+    }
+
+    private List<Variation> getVariationsFromFeatures(List<Feature> features) {
+        return features.forEach(feature -> {
+            Variation.builder()
+                    .parameter(feature.getParameter())
+                    .variationOptions(VariationOption.builder()
+                            .
+                    )
+        });
     }
 
 //    private List<ProductItem> getProductItems(JSONArray obj) {
