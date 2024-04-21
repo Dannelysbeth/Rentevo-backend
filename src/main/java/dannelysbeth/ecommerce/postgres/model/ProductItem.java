@@ -27,7 +27,7 @@ public class ProductItem {
 
     @Setter
     @Column(name = "qty_in_stock")
-    private int quantityInStock;
+    private long quantityInStock;
 
     @Setter
     @Column(name = "price")

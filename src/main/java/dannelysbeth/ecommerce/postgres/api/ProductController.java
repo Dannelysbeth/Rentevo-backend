@@ -1,5 +1,6 @@
 package dannelysbeth.ecommerce.postgres.api;
 
+import dannelysbeth.ecommerce.postgres.service.definition.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductController {
 
     private final ProductService productService;
-    private final Product
 
     @PreAuthorize("hasAnyAuthority('ADMIN_ROLE')")
     @PostMapping("/import")

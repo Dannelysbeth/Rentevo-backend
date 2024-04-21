@@ -20,6 +20,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ProductMapperImpl implements ProductMapper {
@@ -41,8 +42,8 @@ public class ProductMapperImpl implements ProductMapper {
 
     @Override
     public List<ProductItem> transformFromRequest(List<ProductRequest> requests) {
-        return requests.forEach(req -> {
-            ProductItem.builder()
+        return requests.stream().map(req -> {
+            return ProductItem.builder()
                     .product(Product.builder()
                             .id(req.getProductCode())
                             .category(req.getCategory())
@@ -51,21 +52,21 @@ public class ProductMapperImpl implements ProductMapper {
                             .name(req.getName())
                             .build())
                     .sku(req.getSKU())
-                    .variationOptions(req.getFeatures())
+//                    .variationOptions(req.getFeatures())
                     .quantityInStock(req.getQuantityInStock())
-                    .build()
-        });
+                    .build();
+        }).collect(Collectors.toList());
     }
 
-    private List<Variation> getVariationsFromFeatures(List<Feature> features) {
-        return features.forEach(feature -> {
-            Variation.builder()
-                    .parameter(feature.getParameter())
-                    .variationOptions(VariationOption.builder()
-                            .
-                    )
-        });
-    }
+//    private List<Variation> getVariationsFromFeatures(List<Feature> features) {
+//        return features.forEach(feature -> {
+//            Variation.builder()
+//                    .parameter(feature.getParameter())
+//                    .variationOptions(VariationOption.builder()
+//                            .
+//                    )
+//        });
+//    }
 
 //    private List<ProductItem> getProductItems(JSONArray obj) {
 //        List<ProductItem> productItems = new ArrayList<>();
@@ -138,7 +139,7 @@ public class ProductMapperImpl implements ProductMapper {
             double price = (double) jsonObj.get("price");
             String category = jsonObj.get("category").toString();
             long quantityInStock = (long) jsonObj.get("quantityInStock");
-            long SKU = (long) jsonObj.get("SKU");
+            String SKU = jsonObj.get("SKU").toString();
 
             ProductRequest productItem = ProductRequest.builder()
                     .productCode(productCode)
