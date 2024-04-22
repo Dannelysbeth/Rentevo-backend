@@ -1,5 +1,6 @@
 package dannelysbeth.ecommerce.postgres.model.DTO.request;
 
+import dannelysbeth.ecommerce.postgres.model.DTO.Feature;
 import lombok.Builder;
 import lombok.Data;
 

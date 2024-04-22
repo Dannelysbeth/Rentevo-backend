@@ -2,12 +2,10 @@ package dannelysbeth.ecommerce.postgres.mapper.implementation;
 
 import dannelysbeth.ecommerce.postgres.exception.FileInputException;
 import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
-import dannelysbeth.ecommerce.postgres.model.DTO.request.Feature;
+import dannelysbeth.ecommerce.postgres.model.DTO.Feature;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
 import dannelysbeth.ecommerce.postgres.model.Product;
 import dannelysbeth.ecommerce.postgres.model.ProductItem;
-import dannelysbeth.ecommerce.postgres.model.Variation;
-import dannelysbeth.ecommerce.postgres.model.VariationOption;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

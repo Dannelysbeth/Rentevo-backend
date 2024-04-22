@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.mapping.List;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,10 +20,17 @@ public class Variation {
     private Long id;
 
     @Setter
-    @Column(name = "name")
+    @Column(name = "parameter")
     private String parameter;
 
     @Setter
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<VariationOption> variationOptions;
+
+    public void addVariationOption(VariationOption variationOption) {
+        if (variationOptions == null) {
+            this.variationOptions = new HashSet<>();
+        }
+        variationOptions.add(variationOption);
+    }
 }

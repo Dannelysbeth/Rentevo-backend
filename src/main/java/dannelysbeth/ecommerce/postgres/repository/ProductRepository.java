@@ -1,7 +1,11 @@
 package dannelysbeth.ecommerce.postgres.repository;
 
+import dannelysbeth.ecommerce.postgres.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface ProductRepository {
+public interface ProductRepository extends JpaRepository<Product, String> {
+
+    boolean existsById(String id);
 }
