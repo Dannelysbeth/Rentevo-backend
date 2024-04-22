@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -39,7 +40,7 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public List<ProductItem> transformFromRequest(List<ProductRequest> requests) {
+    public Set<ProductItem> transformFromRequest(List<ProductRequest> requests) {
         return requests.stream().map(req -> {
             return ProductItem.builder()
                     .product(Product.builder()
@@ -53,7 +54,7 @@ public class ProductMapperImpl implements ProductMapper {
 //                    .variationOptions(req.getFeatures())
                     .quantityInStock(req.getQuantityInStock())
                     .build();
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toSet());
     }
 
 //    private List<Variation> getVariationsFromFeatures(List<Feature> features) {
