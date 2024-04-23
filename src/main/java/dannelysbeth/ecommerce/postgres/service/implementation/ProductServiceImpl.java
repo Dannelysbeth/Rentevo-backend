@@ -30,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void importFromFile(MultipartFile file) {
         List<ProductRequest> productsReq = this.productMapper.readFromFile(file);
-        List<ProductItem> products  = this.productMapper.transformFromRequest(productsReq);
+        Set<ProductItem> products  = this.productMapper.transformFromRequest(productsReq);
         this.productItemRepository.saveAll(products);
     }
 
