@@ -6,6 +6,8 @@ import dannelysbeth.ecommerce.postgres.model.DTO.Feature;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
 import dannelysbeth.ecommerce.postgres.model.Product;
 import dannelysbeth.ecommerce.postgres.model.ProductItem;
+import dannelysbeth.ecommerce.postgres.model.Variation;
+import dannelysbeth.ecommerce.postgres.model.VariationOption;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -41,90 +44,21 @@ public class ProductMapperImpl implements ProductMapper {
 
     @Override
     public Set<ProductItem> transformFromRequest(List<ProductRequest> requests) {
-        return requests.stream().map(req -> {
-            return ProductItem.builder()
-                    .product(Product.builder()
-                            .id(req.getProductCode())
-                            .category(req.getCategory())
-                            .description(req.getDescription())
-                            .price(req.getPrice())
-                            .name(req.getName())
-                            .build())
-                    .sku(req.getSKU())
-//                    .variationOptions(req.getFeatures())
-                    .quantityInStock(req.getQuantityInStock())
-                    .build();
-        }).collect(Collectors.toSet());
+        return requests.stream().map(req -> ProductItem.builder()
+                .product(Product.builder()
+                        .id(req.getProductCode())
+                        .category(req.getCategory())
+                        .description(req.getDescription())
+                        .price(req.getPrice())
+                        .name(req.getName())
+                        .build())
+                .sku(req.getSKU())
+                .variationOptions(getVariationOptionsFromFeatures(req.getFeatures()))
+                .quantityInStock(req.getQuantityInStock())
+                .build()).collect(Collectors.toSet());
     }
 
-//    private List<Variation> getVariationsFromFeatures(List<Feature> features) {
-//        return features.forEach(feature -> {
-//            Variation.builder()
-//                    .parameter(feature.getParameter())
-//                    .variationOptions(VariationOption.builder()
-//                            .
-//                    )
-//        });
-//    }
 
-//    private List<ProductItem> getProductItems(JSONArray obj) {
-//        List<ProductItem> productItems = new ArrayList<>();
-//
-//        obj.forEach(product -> {
-//            ProductItem productItem = ProductItem.builder()
-//                    .product(this.getProduct((JSONObject) product))
-//                    .SKU(this.getSKU((JSONObject) product))
-//                    .quantityInStock(this.getQuantityInStock((JSONObject) product))
-//                    .variation(this.getVariations((JSONObject) product))
-//                    .build();
-//            productItems.add(productItem);
-//        });
-//        return productItems;
-//    }
-//
-//    private Product getProduct(JSONObject jsonObj) {
-//
-//        String productCode = jsonObj.get("productCode").toString();
-//        String name = jsonObj.get("name").toString();
-//        String description = jsonObj.get("description").toString();
-//        double price = (double) jsonObj.get("price");
-//        String category = jsonObj.get("category").toString();
-//        return Product.builder()
-//                .id(productCode)
-//                .name(name)
-//                .price(price)
-//                .category(category)
-//                .description(description)
-//                .build();
-//    }
-//
-//    private long getQuantityInStock(JSONObject jsonObject) {
-//        return (long) jsonObject.get("quantityInStock");
-//    }
-//
-//    private long getSKU(JSONObject jsonObject) {
-//        return (long) jsonObject.get("SKU");
-//    }
-//
-//    private List<Variation> getVariations(JSONObject jsonObj) {
-//        List<Variation> variationList = new ArrayList<>();
-//
-//        JSONArray variationsJsonArr = (JSONArray) jsonObj.get("variation");
-//        variationsJsonArr.forEach(varJson -> {
-//            String parameter = ((JSONObject) varJson).get("parameter").toString();
-//            JSONObject variationOptionJSONObj = (JSONObject) ((JSONObject) varJson).get("type");
-//            String name = variationOptionJSONObj.get("name").toString();
-//            variationList.add(Variation.builder()
-//                    .parameter(parameter)
-//                    .type(VariationOption.builder()
-//                            .variation()
-//                            .value(name)
-//                            .build())
-//                    .build()
-//            );
-//        });
-//        return variationList;
-//    }
 
     private List<ProductRequest> getProductRequests(JSONArray obj) {
         List<ProductRequest> productItems = new ArrayList<>();
@@ -170,6 +104,20 @@ public class ProductMapperImpl implements ProductMapper {
             );
         });
         return features;
+    }
+
+    private Set<VariationOption> getVariationOptionsFromFeatures(List<Feature> features) {
+        Set<VariationOption> variationOptionSet = new HashSet<>();
+        for (Feature feature : features) {
+            VariationOption build = VariationOption.builder()
+                    .variation(Variation.builder()
+                            .parameter(feature.getParameter())
+                            .build())
+                    .value(feature.getValue())
+                    .build();
+            variationOptionSet.add(build);
+        }
+        return variationOptionSet;
     }
 
 
