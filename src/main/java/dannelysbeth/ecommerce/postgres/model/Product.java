@@ -1,6 +1,7 @@
 package dannelysbeth.ecommerce.postgres.model;
 
 import jakarta.persistence.*;
+import jdk.jfr.Category;
 import lombok.*;
 
 @Entity
@@ -14,12 +15,13 @@ public class Product {
     private String id;
 
     @Setter
-    @Column(name = "name")
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private ProductCategory category;
 
     @Setter
-    @Column(name = "category")
-    private String category;
+    @Column(name = "name")
+    private String name;
 
     @Setter
     @Column(name = "description")
@@ -28,4 +30,6 @@ public class Product {
     @Setter
     @Column(name = "price")
     private double price;
+
+
 }

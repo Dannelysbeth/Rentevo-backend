@@ -2,12 +2,9 @@ package dannelysbeth.ecommerce.postgres.mapper.implementation;
 
 import dannelysbeth.ecommerce.postgres.exception.FileInputException;
 import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
+import dannelysbeth.ecommerce.postgres.model.*;
 import dannelysbeth.ecommerce.postgres.model.DTO.Feature;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
-import dannelysbeth.ecommerce.postgres.model.Product;
-import dannelysbeth.ecommerce.postgres.model.ProductItem;
-import dannelysbeth.ecommerce.postgres.model.Variation;
-import dannelysbeth.ecommerce.postgres.model.VariationOption;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -47,7 +44,7 @@ public class ProductMapperImpl implements ProductMapper {
         return requests.stream().map(req -> ProductItem.builder()
                 .product(Product.builder()
                         .id(req.getProductCode())
-                        .category(req.getCategory())
+                        .category(getCategory(req.getCategory()))
                         .description(req.getDescription())
                         .price(req.getPrice())
                         .name(req.getName())
@@ -55,6 +52,7 @@ public class ProductMapperImpl implements ProductMapper {
                 .sku(req.getSKU())
                 .variationOptions(getVariationOptionsFromFeatures(req.getFeatures()))
                 .quantityInStock(req.getQuantityInStock())
+                .price(req.getPrice())
                 .build()).collect(Collectors.toSet());
     }
 
@@ -120,5 +118,9 @@ public class ProductMapperImpl implements ProductMapper {
         return variationOptionSet;
     }
 
-
+    private ProductCategory getCategory(String categoryName) {
+        return ProductCategory.builder()
+                .name(categoryName)
+                .build();
+    }
 }

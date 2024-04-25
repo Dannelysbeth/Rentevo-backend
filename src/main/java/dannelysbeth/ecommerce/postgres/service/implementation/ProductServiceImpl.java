@@ -2,13 +2,8 @@ package dannelysbeth.ecommerce.postgres.service.implementation;
 
 import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
-import dannelysbeth.ecommerce.postgres.model.ProductItem;
-import dannelysbeth.ecommerce.postgres.model.Variation;
-import dannelysbeth.ecommerce.postgres.model.VariationOption;
-import dannelysbeth.ecommerce.postgres.repository.ProductItemRepository;
-import dannelysbeth.ecommerce.postgres.repository.ProductRepository;
-import dannelysbeth.ecommerce.postgres.repository.VariationOptionRepository;
-import dannelysbeth.ecommerce.postgres.repository.VariationRepository;
+import dannelysbeth.ecommerce.postgres.model.*;
+import dannelysbeth.ecommerce.postgres.repository.*;
 import dannelysbeth.ecommerce.postgres.service.definition.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +21,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductItemRepository productItemRepository;
     private final VariationRepository variationRepository;
     private final VariationOptionRepository variationOptionRepository;
+    private final CategoryRepository categoryRepository;
 
     private final ProductMapper productMapper;
 
@@ -39,25 +35,41 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveMany(Set<ProductItem> productItems) {
         productItems.forEach(item -> {
-            if (!this.productRepository.existsById(item.getProduct().getId())) {
-                this.productRepository.save(item.getProduct());
-            }
+            Product product = saveProduct(item.getProduct());
+            item.setProduct(product);
             item.setVariationOptions(saveVariationOptions(item.getVariationOptions()));
             this.productItemRepository.save(item);
         });
     }
 
+    private Product saveProduct(Product product) {
+        if (!this.productRepository.existsById(product.getId())) {
+            ProductCategory category = saveProductCategory(product.getCategory());
+            product.setCategory(category);
+            return this.productRepository.save(product);
+        }
+        return this.productRepository.getById(product.getId());
+    }
+
     private Set<VariationOption> saveVariationOptions(Set<VariationOption> variationOptions) {
         return variationOptions.stream().map(variationOption -> {
             if (!this.variationOptionRepository.existsByVariation_ParameterAndValue(variationOption.getVariation().getParameter(), variationOption.getValue())) {
-                if (!this.variationRepository.existsByParameter(variationOption.getVariation().getParameter())) {
-                    Variation variation = this.variationRepository.save(variationOption.getVariation());
-                    variationOption.setVariation(variation);
+                Variation variation = this.variationRepository.getByParameter(variationOption.getVariation().getParameter());
+                if (variation == null) {
+                    variation = this.variationRepository.save(variationOption.getVariation());
                 }
+                variationOption.setVariation(variation);
                 this.variationOptionRepository.save(variationOption);
             }
             return variationOptionRepository.getByVariation_ParameterAndValue(variationOption.getVariation().getParameter(), variationOption.getValue());
         }).collect(Collectors.toSet());
+    }
+    private ProductCategory saveProductCategory(ProductCategory productCategory) {
+        ProductCategory foundCategory = categoryRepository.getByName(productCategory.getName());
+        if (foundCategory == null) {
+            return categoryRepository.save(productCategory);
+        }
+        return foundCategory;
     }
 
 }

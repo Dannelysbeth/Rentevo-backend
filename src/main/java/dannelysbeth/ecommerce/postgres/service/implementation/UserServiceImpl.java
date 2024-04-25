@@ -24,8 +24,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final AuthService authService;
 
-    StopWatch watch;
-
     @Override
     public User getUserById(Long id) {
         return userRepository.getReferenceById(id);
