@@ -3,8 +3,6 @@ package dannelysbeth.ecommerce.postgres.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
-
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,10 +11,11 @@ import java.util.Set;
 @Table(name = "categories")
 public class ProductCategory {
     @Id
+    @GeneratedValue
     private Long id;
 
     @Setter
     @Column(name = "category")
-    private String categoryName;
+    private String name;
 
 }
