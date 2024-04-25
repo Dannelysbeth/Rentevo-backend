@@ -1,7 +1,9 @@
 package dannelysbeth.ecommerce.postgres.api;
 
 import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
+import dannelysbeth.ecommerce.postgres.model.Country;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
+import dannelysbeth.ecommerce.postgres.model.Product;
 import dannelysbeth.ecommerce.postgres.model.ProductItem;
 import dannelysbeth.ecommerce.postgres.service.definition.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +39,13 @@ public class ProductController {
         this.productService.saveMany(productItems);
         return ResponseEntity.ok()
                 .body("Products were imported successfully");
+    }
+
+    @GetMapping
+    public ResponseEntity<Set<Product>> findAll(@RequestParam(required = false) Double lte,
+                                                @RequestParam(required = false) Double gte) {
+        return ResponseEntity.ok()
+                .body(productService.getProducts(lte, gte));
+
     }
 }

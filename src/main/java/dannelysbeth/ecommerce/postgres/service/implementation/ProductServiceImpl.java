@@ -1,14 +1,17 @@
 package dannelysbeth.ecommerce.postgres.service.implementation;
 
+import dannelysbeth.ecommerce.postgres.filters.ProductSpecification;
 import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
 import dannelysbeth.ecommerce.postgres.model.*;
 import dannelysbeth.ecommerce.postgres.repository.*;
 import dannelysbeth.ecommerce.postgres.service.definition.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -42,6 +45,12 @@ public class ProductServiceImpl implements ProductService {
         });
     }
 
+    @Override
+    public Set<Product> getProducts(Double priceStartsAt, Double priceEndsAt) {
+        Specification<Product> filters = ProductSpecification.filterBy(priceStartsAt, priceEndsAt);
+        return new HashSet<>(productRepository.findAll(filters));
+    }
+
     private Product saveProduct(Product product) {
         if (!this.productRepository.existsById(product.getId())) {
             ProductCategory category = saveProductCategory(product.getCategory());
@@ -64,6 +73,7 @@ public class ProductServiceImpl implements ProductService {
             return variationOptionRepository.getByVariation_ParameterAndValue(variationOption.getVariation().getParameter(), variationOption.getValue());
         }).collect(Collectors.toSet());
     }
+
     private ProductCategory saveProductCategory(ProductCategory productCategory) {
         ProductCategory foundCategory = categoryRepository.getByName(productCategory.getName());
         if (foundCategory == null) {
