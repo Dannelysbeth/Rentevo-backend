@@ -35,35 +35,41 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveMany(Set<ProductItem> productItems) {
         productItems.forEach(item -> {
-            if (!this.productRepository.existsById(item.getProduct().getId())) {
-                Product product = item.getProduct();
-                ProductCategory category = saveProductCategory(product);
-                product.setCategory(category);
-                this.productRepository.save(item.getProduct());
-            }
+            Product product = saveProduct(item.getProduct());
+            item.setProduct(product);
             item.setVariationOptions(saveVariationOptions(item.getVariationOptions()));
             this.productItemRepository.save(item);
         });
     }
 
+    private Product saveProduct(Product product) {
+        if (!this.productRepository.existsById(product.getId())) {
+            ProductCategory category = saveProductCategory(product.getCategory());
+            product.setCategory(category);
+            return this.productRepository.save(product);
+        }
+        return this.productRepository.getById(product.getId());
+    }
+
     private Set<VariationOption> saveVariationOptions(Set<VariationOption> variationOptions) {
         return variationOptions.stream().map(variationOption -> {
             if (!this.variationOptionRepository.existsByVariation_ParameterAndValue(variationOption.getVariation().getParameter(), variationOption.getValue())) {
-                if (!this.variationRepository.existsByParameter(variationOption.getVariation().getParameter())) {
-                    Variation variation = this.variationRepository.save(variationOption.getVariation());
-                    variationOption.setVariation(variation);
+                Variation variation = this.variationRepository.getByParameter(variationOption.getVariation().getParameter());
+                if (variation == null) {
+                    variation = this.variationRepository.save(variationOption.getVariation());
                 }
+                variationOption.setVariation(variation);
                 this.variationOptionRepository.save(variationOption);
             }
             return variationOptionRepository.getByVariation_ParameterAndValue(variationOption.getVariation().getParameter(), variationOption.getValue());
         }).collect(Collectors.toSet());
     }
-    ProductCategory saveProductCategory(Product product) {
-        ProductCategory productCategory = categoryRepository.getByName(product.getCategory().getName());
-        if (productCategory == null) {
-            return categoryRepository.save(product.getCategory());
+    private ProductCategory saveProductCategory(ProductCategory productCategory) {
+        ProductCategory foundCategory = categoryRepository.getByName(productCategory.getName());
+        if (foundCategory == null) {
+            return categoryRepository.save(productCategory);
         }
-        return productCategory;
+        return foundCategory;
     }
 
 }

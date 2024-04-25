@@ -52,6 +52,7 @@ public class ProductMapperImpl implements ProductMapper {
                 .sku(req.getSKU())
                 .variationOptions(getVariationOptionsFromFeatures(req.getFeatures()))
                 .quantityInStock(req.getQuantityInStock())
+                .price(req.getPrice())
                 .build()).collect(Collectors.toSet());
     }
 
