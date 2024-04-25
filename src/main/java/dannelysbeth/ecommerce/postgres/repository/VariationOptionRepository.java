@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VariationOptionRepository extends JpaRepository<VariationOption, Long> {
     boolean existsByVariation_ParameterAndValue(String parameter, String name);
+
+    VariationOption getByVariation_ParameterAndValue(String parameter, String name);
 }
