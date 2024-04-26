@@ -1,8 +1,8 @@
 package dannelysbeth.ecommerce.postgres.api;
 
 import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
-import dannelysbeth.ecommerce.postgres.model.Country;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
+import dannelysbeth.ecommerce.postgres.model.DTO.response.ProductResponse;
 import dannelysbeth.ecommerce.postgres.model.Product;
 import dannelysbeth.ecommerce.postgres.model.ProductItem;
 import dannelysbeth.ecommerce.postgres.service.definition.ProductService;
@@ -42,10 +42,12 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Set<Product>> findAll(@RequestParam(required = false) Double lte,
-                                                @RequestParam(required = false) Double gte) {
+    public ResponseEntity<Set<ProductResponse>> findAll(@RequestParam(required = false) Double lte,
+                                                        @RequestParam(required = false) Double gte) {
         return ResponseEntity.ok()
-                .body(productService.getProducts(lte, gte));
+                .body(productMapper
+                        .transformToProductResponse(productService
+                                .getProducts(lte, gte)));
 
     }
 }

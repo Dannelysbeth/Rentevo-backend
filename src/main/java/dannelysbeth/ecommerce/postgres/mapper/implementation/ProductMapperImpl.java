@@ -1,21 +1,13 @@
 package dannelysbeth.ecommerce.postgres.mapper.implementation;
 
-import dannelysbeth.ecommerce.postgres.exception.FileInputException;
 import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
-import dannelysbeth.ecommerce.postgres.model.*;
 import dannelysbeth.ecommerce.postgres.model.DTO.Feature;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import dannelysbeth.ecommerce.postgres.model.DTO.response.ProductItemResponse;
+import dannelysbeth.ecommerce.postgres.model.DTO.response.ProductResponse;
+import dannelysbeth.ecommerce.postgres.model.*;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,21 +15,6 @@ import java.util.stream.Collectors;
 
 @Component
 public class ProductMapperImpl implements ProductMapper {
-    @Override
-    public List<ProductRequest> readFromFile(MultipartFile file) {
-        JSONParser jsonParser = new JSONParser();
-
-        try (Reader reader = new InputStreamReader(file.getInputStream())) {
-            Object obj = jsonParser.parse(reader);
-
-            return getProductRequests((JSONArray) obj);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ParseException e) {
-            throw new FileInputException(e.getMessage());
-        }
-    }
 
     @Override
     public Set<ProductItem> transformFromRequest(List<ProductRequest> requests) {
@@ -56,52 +33,39 @@ public class ProductMapperImpl implements ProductMapper {
                 .build()).collect(Collectors.toSet());
     }
 
-
-
-    private List<ProductRequest> getProductRequests(JSONArray obj) {
-        List<ProductRequest> productItems = new ArrayList<>();
-
-        obj.forEach(product -> {
-            JSONObject jsonObj = (JSONObject) product;
-
-            String productCode = jsonObj.get("productCode").toString();
-            String name = jsonObj.get("name").toString();
-            String description = jsonObj.get("description").toString();
-            double price = (double) jsonObj.get("price");
-            String category = jsonObj.get("category").toString();
-            long quantityInStock = (long) jsonObj.get("quantityInStock");
-            String SKU = jsonObj.get("SKU").toString();
-
-            ProductRequest productItem = ProductRequest.builder()
-                    .productCode(productCode)
-                    .name(name)
-                    .description(description)
-                    .price(price)
-                    .category(category)
-                    .features(getFeatures(jsonObj))
-                    .quantityInStock(quantityInStock)
-                    .SKU(SKU)
-                    .build();
-            productItems.add(productItem);
-        });
-        return productItems;
+    @Override
+    public Set<ProductResponse> transformToProductResponse(Set<Product> products) {
+        return products.stream().map(product ->
+                ProductResponse.builder()
+                        .productCode(product.getId())
+                        .productItems(transformToProductItemResponse(product.getProductItems()))
+                        .description(product.getDescription())
+                        .price(product.getPrice())
+                        .category(product.getCategory().getName())
+                        .name(product.getName())
+                        .build()
+        ).collect(Collectors.toSet());
     }
 
-    private List<Feature> getFeatures(JSONObject jsonObj) {
-        List<Feature> features = new ArrayList<>();
+    @Override
+    public Set<ProductItemResponse> transformToProductItemResponse(Set<ProductItem> productItems) {
+        return productItems.stream().map(productItem ->
+                ProductItemResponse.builder()
+                        .featureSet(getFeaturesFromVariation(productItem.getVariationOptions()))
+                        .SKU(productItem.getSku())
+                        .quantityInStock(productItem.getQuantityInStock())
+                        .price(productItem.getPrice())
+                        .build()
+        ).collect(Collectors.toSet());
+    }
 
-        JSONArray variationsJsonArr = (JSONArray) jsonObj.get("features");
-
-        variationsJsonArr.forEach(varJson -> {
-            String parameter = ((JSONObject) varJson).get("parameter").toString();
-            String value = ((JSONObject) varJson).get("value").toString();
-            features.add(Feature.builder()
-                    .parameter(parameter)
-                    .value(value)
-                    .build()
-            );
-        });
-        return features;
+    private Set<Feature> getFeaturesFromVariation(Set<VariationOption> variationOptions) {
+        return variationOptions.stream().map(variationOption ->
+                Feature.builder()
+                        .parameter(variationOption.getVariation().getParameter())
+                        .value(variationOption.getValue())
+                        .build()
+        ).collect(Collectors.toSet());
     }
 
     private Set<VariationOption> getVariationOptionsFromFeatures(List<Feature> features) {

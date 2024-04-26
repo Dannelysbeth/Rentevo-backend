@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jdk.jfr.Category;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,6 +32,10 @@ public class Product {
     @Setter
     @Column(name = "price")
     private double price;
+
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
+    private Set<ProductItem> productItems;
 
 
 }

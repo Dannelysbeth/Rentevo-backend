@@ -1,5 +1,6 @@
 package dannelysbeth.ecommerce.postgres.service.implementation;
 
+import dannelysbeth.ecommerce.postgres.factory.definition.JsonProductMapper;
 import dannelysbeth.ecommerce.postgres.filters.ProductSpecification;
 import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
@@ -26,11 +27,13 @@ public class ProductServiceImpl implements ProductService {
     private final VariationOptionRepository variationOptionRepository;
     private final CategoryRepository categoryRepository;
 
+    private final JsonProductMapper jsonProductMapper;
     private final ProductMapper productMapper;
+
 
     @Override
     public void importFromFile(MultipartFile file) {
-        List<ProductRequest> productsReq = this.productMapper.readFromFile(file);
+        List<ProductRequest> productsReq = this.jsonProductMapper.readFromFile(file);
         Set<ProductItem> products = this.productMapper.transformFromRequest(productsReq);
         this.productItemRepository.saveAll(products);
     }
