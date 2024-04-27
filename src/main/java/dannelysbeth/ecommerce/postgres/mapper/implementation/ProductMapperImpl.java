@@ -59,7 +59,7 @@ public class ProductMapperImpl implements ProductMapper {
         ).collect(Collectors.toSet());
     }
 
-    private Set<Feature> getFeaturesFromVariation(Set<VariationOption> variationOptions) {
+    public static Set<Feature> getFeaturesFromVariation(Set<VariationOption> variationOptions) {
         return variationOptions.stream().map(variationOption ->
                 Feature.builder()
                         .parameter(variationOption.getVariation().getParameter())

@@ -22,7 +22,7 @@ public class OrderLine {
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
-    private ShopOrder shopOrder;
+    private Order shopOrder;
 
     @Setter
     @Column(name = "qty")

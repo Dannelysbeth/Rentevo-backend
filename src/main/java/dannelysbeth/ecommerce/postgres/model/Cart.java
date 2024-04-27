@@ -1,10 +1,9 @@
 package dannelysbeth.ecommerce.postgres.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -12,14 +11,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 @Table(name = "shopping_carts")
-public class ShoppingCart {
+public class Cart {
     @Id
     @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cart")
+    private Set<CartItem> cartItems;
 
 }
