@@ -69,5 +69,4 @@ public class ProductSpecification {
             return values == null ? builder.conjunction() : builder.or(predicates.toArray(new Predicate[0]));
         };
     }
-
 }
