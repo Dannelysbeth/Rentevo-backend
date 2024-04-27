@@ -2,7 +2,6 @@ package dannelysbeth.ecommerce.postgres.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.mapping.List;
 
 import java.util.HashSet;
 import java.util.Set;
