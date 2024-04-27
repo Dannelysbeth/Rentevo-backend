@@ -24,10 +24,4 @@ public class VariationOption {
     @Column(name = "value")
     private String value;
 
-//    @Setter
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "product_configuration",
-//            joinColumns = {@JoinColumn(name = "variation_option_id", referencedColumnName = "id")},
-//            inverseJoinColumns = {@JoinColumn(name = "product_item_id", referencedColumnName = "id")})
-//    private Set<ProductItem> productItems;
 }

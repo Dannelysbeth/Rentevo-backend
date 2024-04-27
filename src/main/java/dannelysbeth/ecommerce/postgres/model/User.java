@@ -50,7 +50,7 @@ public class User implements UserDetails {
     private Role role;
 
     @Setter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Address> addresses;
 
     @Override

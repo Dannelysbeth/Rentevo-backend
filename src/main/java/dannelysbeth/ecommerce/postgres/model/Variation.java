@@ -23,7 +23,7 @@ public class Variation {
     private String parameter;
 
     @Setter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "variation")
     private Set<VariationOption> variationOptions;
 
     public void addVariationOption(VariationOption variationOption) {
