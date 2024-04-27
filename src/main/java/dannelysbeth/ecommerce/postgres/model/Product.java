@@ -1,7 +1,6 @@
 package dannelysbeth.ecommerce.postgres.model;
 
 import jakarta.persistence.*;
-import jdk.jfr.Category;
 import lombok.*;
 
 import java.util.Set;
