@@ -12,7 +12,7 @@ import java.util.Date;
 @Builder
 @Getter
 @Table(name = "shop_orders")
-public class ShopOrder {
+public class Order {
     @Id
     @GeneratedValue
     private Long id;

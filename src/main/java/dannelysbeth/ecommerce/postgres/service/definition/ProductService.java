@@ -14,4 +14,6 @@ public interface ProductService {
     void saveMany(Set<ProductItem> productItems);
 
     Set<Product> getProducts(Double priceStartsAt, Double priceEndsAt, Long quantity, List<String> category, List<String> color, List<String> size);
+
+    ProductItem getProductItemById(Long id);
 }

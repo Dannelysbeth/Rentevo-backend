@@ -54,6 +54,11 @@ public class ProductServiceImpl implements ProductService {
         return new HashSet<>(productRepository.findAll(filters));
     }
 
+    @Override
+    public ProductItem getProductItemById(Long id) {
+        return productItemRepository.getById(id);
+    }
+
     private Product saveProduct(Product product) {
         if (!this.productRepository.existsById(product.getId())) {
             ProductCategory category = saveProductCategory(product.getCategory());
