@@ -43,11 +43,12 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<Set<ProductResponse>> findAll(@RequestParam(required = false) Double lte,
-                                                        @RequestParam(required = false) Double gte) {
+                                                        @RequestParam(required = false) Double gte,
+                                                        @RequestParam(required = false) String color) {
         return ResponseEntity.ok()
                 .body(productMapper
                         .transformToProductResponse(productService
-                                .getProducts(lte, gte)));
+                                .getProducts(lte, gte, color)));
 
     }
 }

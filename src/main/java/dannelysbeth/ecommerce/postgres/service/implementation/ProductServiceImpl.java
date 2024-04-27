@@ -49,8 +49,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Set<Product> getProducts(Double priceStartsAt, Double priceEndsAt) {
-        Specification<Product> filters = ProductSpecification.filterBy(priceStartsAt, priceEndsAt);
+    public Set<Product> getProducts(Double priceStartsAt, Double priceEndsAt, String color) {
+        Specification<Product> filters = ProductSpecification.filterBy(priceStartsAt, priceEndsAt, color);
         return new HashSet<>(productRepository.findAll(filters));
     }
 

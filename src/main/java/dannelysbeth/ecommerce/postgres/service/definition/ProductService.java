@@ -14,5 +14,5 @@ public interface ProductService {
 
     void saveMany(Set<ProductItem> productItems);
 
-    Set<Product> getProducts(Double priceStartsAt, Double priceEndsAt);
+    Set<Product> getProducts(Double priceStartsAt, Double priceEndsAt, String color);
 }
