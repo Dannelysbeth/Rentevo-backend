@@ -21,6 +21,10 @@ public class Cart {
     private User user;
 
     @Setter
+    @Column(name = "total")
+    private double total;
+
+    @Setter
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "cart")
     private Set<CartItem> cartItems;
 

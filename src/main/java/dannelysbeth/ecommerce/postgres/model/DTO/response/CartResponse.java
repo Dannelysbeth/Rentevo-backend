@@ -12,4 +12,6 @@ public class CartResponse {
     String username;
 
     Set<CartItemResponse> items;
+
+    double total;
 }

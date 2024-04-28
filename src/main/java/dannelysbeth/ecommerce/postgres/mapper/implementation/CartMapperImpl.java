@@ -27,6 +27,7 @@ public class CartMapperImpl implements CartMapper {
         return CartResponse.builder()
                 .username(cart.getUser().getUsername())
                 .items(getCartItemResponses(cart.getCartItems()))
+                .total(cart.getTotal())
                 .build();
     }
 
