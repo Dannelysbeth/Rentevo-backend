@@ -1,4 +1,4 @@
-package dannelysbeth.ecommerce.postgres.enums;
+package dannelysbeth.ecommerce.postgres.model.enums;
 
 import lombok.Getter;
 

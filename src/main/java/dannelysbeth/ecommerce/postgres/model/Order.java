@@ -1,17 +1,18 @@
 package dannelysbeth.ecommerce.postgres.model;
 
-import dannelysbeth.ecommerce.postgres.enums.OrderStatus;
+import dannelysbeth.ecommerce.postgres.model.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-@Table(name = "shop_orders")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue
@@ -46,7 +47,12 @@ public class Order {
     private double orderTotal;
 
     @Setter
+    @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
     private OrderStatus orderStatus;
+
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "shopOrder")
+    private Set<OrderItem> orderItems;
 
 }

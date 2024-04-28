@@ -11,4 +11,6 @@ public interface CartService {
     void saveCart(Cart cart);
 
     void addItemToCart(Cart cart, CartItem cartItem);
+
+    void emptyCart(Cart cart);
 }

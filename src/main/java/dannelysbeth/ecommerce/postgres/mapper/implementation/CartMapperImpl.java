@@ -5,6 +5,7 @@ import dannelysbeth.ecommerce.postgres.model.Cart;
 import dannelysbeth.ecommerce.postgres.model.CartItem;
 import dannelysbeth.ecommerce.postgres.model.DTO.response.CartItemResponse;
 import dannelysbeth.ecommerce.postgres.model.DTO.response.CartResponse;
+import dannelysbeth.ecommerce.postgres.model.OrderItem;
 import dannelysbeth.ecommerce.postgres.model.ProductItem;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +28,7 @@ public class CartMapperImpl implements CartMapper {
         return CartResponse.builder()
                 .username(cart.getUser().getUsername())
                 .items(getCartItemResponses(cart.getCartItems()))
+                .total(cart.getTotal())
                 .build();
     }
 
@@ -41,6 +43,20 @@ public class CartMapperImpl implements CartMapper {
                     .quantity(cartItem.getQuantity())
                     .description(cartItem.getProductItem().getProduct().getDescription())
                     .build()
+        ).collect(Collectors.toSet());
+    }
+
+    public static Set<CartItemResponse> getCartItemResponsesForOrder(Set<OrderItem> orderItems) {
+        return orderItems.stream().map(orderItem ->
+                CartItemResponse.builder()
+                        .name(orderItem.getProductItem().getProduct().getName())
+                        .featureSet(ProductMapperImpl.getFeaturesFromVariation(orderItem.getProductItem().getVariationOptions()))
+                        .price(orderItem.getProductItem().getPrice())
+                        .category(orderItem.getProductItem().getProduct().getCategory().getName())
+                        .productCode(orderItem.getProductItem().getProduct().getId())
+                        .quantity(orderItem.getQty())
+                        .description(orderItem.getProductItem().getProduct().getDescription())
+                        .build()
         ).collect(Collectors.toSet());
     }
 }

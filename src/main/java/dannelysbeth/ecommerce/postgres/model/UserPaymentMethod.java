@@ -1,6 +1,6 @@
 package dannelysbeth.ecommerce.postgres.model;
 
-import dannelysbeth.ecommerce.postgres.enums.PaymentType;
+import dannelysbeth.ecommerce.postgres.model.enums.PaymentType;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -8,14 +8,21 @@ import lombok.Data;
 @Data
 @Builder
 public class AddressResponse {
-    Country country;
-    Person user;
+
+    String country;
+
     int unitNumber;
+
     int streetNumber;
+
     String addressLine1;
+
     String addressLine2;
+
     String city;
+
     String postalCode;
+
     boolean isDefault;
 
     @Builder

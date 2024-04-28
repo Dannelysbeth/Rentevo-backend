@@ -1,5 +1,6 @@
 package dannelysbeth.ecommerce.postgres.service.implementation;
 
+import dannelysbeth.ecommerce.postgres.exception.CountryNotFoundException;
 import dannelysbeth.ecommerce.postgres.mapper.definition.CountryMapper;
 import dannelysbeth.ecommerce.postgres.model.Country;
 import dannelysbeth.ecommerce.postgres.repository.CountryRepository;
@@ -35,5 +36,10 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public void importCountries(Set<Country> countries) {
         countryRepository.saveAll(countries);
+    }
+
+    @Override
+    public Country getCountryByCode(String countryCode) {
+        return countryRepository.findById(countryCode).orElseThrow(CountryNotFoundException::new);
     }
 }

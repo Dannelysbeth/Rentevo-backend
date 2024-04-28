@@ -11,4 +11,6 @@ public interface CountryService {
     void importCountry(Country country);
 
     void importCountries(Set<Country> countries);
+
+    Country getCountryByCode(String countryCode);
 }

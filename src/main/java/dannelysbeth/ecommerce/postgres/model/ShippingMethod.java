@@ -11,8 +11,7 @@ import lombok.*;
 @Table(name = "shipping_methods")
 public class ShippingMethod {
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
 
     @Setter
     @Column(name = "name")
