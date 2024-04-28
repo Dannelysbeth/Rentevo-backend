@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Getter
-@Table(name = "shop_orders")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue
@@ -47,6 +47,7 @@ public class Order {
     private double orderTotal;
 
     @Setter
+    @Enumerated(EnumType.STRING)
     @Column(name = "order_status")
     private OrderStatus orderStatus;
 
