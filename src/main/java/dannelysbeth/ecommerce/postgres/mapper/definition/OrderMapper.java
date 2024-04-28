@@ -12,6 +12,7 @@ import java.util.Set;
 public interface OrderMapper {
 
     Order initOrder(User user);
+
     Order updateOrderFromRequest(Order order, OrderRequest request, Cart cart, Address address, ShippingMethod shippingMethod);
 
     Set<OrderResponse> transformToOrderResponse(Set<Order> order);

@@ -24,7 +24,7 @@ public class CartServiceImpl implements CartService {
         Cart cart = cartRepository.getByUser_Username(user.getUsername());
         if (cart == null)
             cart = cartRepository.save(Cart.builder()
-                            .user(user)
+                    .user(user)
                     .build());
         return cart;
     }
@@ -37,7 +37,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void addItemToCart(Cart cart, CartItem cartItem) {
         Set<CartItem> cartItems = cart.getCartItems();
-        if(cartItems != null) {
+        if (cartItems != null) {
             for (CartItem item : cartItems) {
                 if (Objects.equals(item.getProductItem().getId(), cartItem.getProductItem().getId())) {
                     int quantity = item.getQuantity();
@@ -76,7 +76,7 @@ public class CartServiceImpl implements CartService {
         Set<CartItem> cartItems = cartItemRepository.getByCart_Id(cart.getId());
         double total = 0;
         if (cartItems != null) {
-            for(CartItem item: cartItems) {
+            for (CartItem item : cartItems) {
                 total += item.getQuantity() * item.getProductItem().getPrice();
             }
         }

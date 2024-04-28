@@ -1,9 +1,9 @@
 package dannelysbeth.ecommerce.postgres.service.definition;
 
-import dannelysbeth.ecommerce.postgres.model.enums.OrderStatus;
 import dannelysbeth.ecommerce.postgres.model.Order;
 import dannelysbeth.ecommerce.postgres.model.User;
 import dannelysbeth.ecommerce.postgres.model.UserPaymentMethod;
+import dannelysbeth.ecommerce.postgres.model.enums.OrderStatus;
 
 import java.util.Set;
 

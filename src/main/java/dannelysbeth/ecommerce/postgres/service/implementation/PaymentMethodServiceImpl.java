@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PaymentMethodServiceImpl implements PaymentMethodService {
     final private PaymentMethodRepository paymentMethodRepository;
+
     @Override
     public UserPaymentMethod getPaymentMethodById(Long id) {
         return paymentMethodRepository.findById(id).orElseThrow(PaymentMethodNotFoundException::new);

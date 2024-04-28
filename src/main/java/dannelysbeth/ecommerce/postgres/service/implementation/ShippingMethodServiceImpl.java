@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class ShippingMethodServiceImpl implements ShippingMethodService {
 
     private final ShippingMethodRepository shippingMethodRepository;
+
     @Override
     public ShippingMethod getShippingMethodByCode(String code) {
         return shippingMethodRepository.findById(code).orElseThrow(ShippingMethodNotFoundException::new);

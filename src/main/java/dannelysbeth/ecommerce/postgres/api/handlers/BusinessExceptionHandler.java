@@ -59,6 +59,7 @@ public class BusinessExceptionHandler {
     public ErrorResponse handleCountryNotFoundException(CountryNotFoundException exception) {
         return new ErrorResponse(exception);
     }
+
     @ExceptionHandler(PaymentMethodNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ErrorResponse handlePaymentMethodNotFoundException(PaymentMethodNotFoundException exception) {

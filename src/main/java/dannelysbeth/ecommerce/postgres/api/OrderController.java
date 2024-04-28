@@ -27,7 +27,6 @@ public class OrderController {
     private final OrderMapper orderMapper;
 
 
-
     @PreAuthorize("hasAnyAuthority('ADMIN_ROLE', 'USER_ROLE')")
     @PostMapping("/create")
     public ResponseEntity<String> createOrder(@RequestBody OrderRequest request) {
@@ -54,7 +53,7 @@ public class OrderController {
 
         Set<Order> orders = orderService.getOrdersByUser(loggedUser.getUsername());
 
-        Set<OrderResponse> orderResponse = orderMapper.transformToOrderResponse(orders) ;
+        Set<OrderResponse> orderResponse = orderMapper.transformToOrderResponse(orders);
 
         return ResponseEntity.ok()
                 .body(orderResponse);

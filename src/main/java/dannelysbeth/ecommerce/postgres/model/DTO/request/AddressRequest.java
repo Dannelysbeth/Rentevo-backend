@@ -1,6 +1,5 @@
 package dannelysbeth.ecommerce.postgres.model.DTO.request;
 
-import dannelysbeth.ecommerce.postgres.model.Country;
 import lombok.Data;
 
 @Data

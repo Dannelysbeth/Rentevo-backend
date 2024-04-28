@@ -16,6 +16,15 @@ import java.util.stream.Collectors;
 @Component
 public class ProductMapperImpl implements ProductMapper {
 
+    public static Set<Feature> getFeaturesFromVariation(Set<VariationOption> variationOptions) {
+        return variationOptions.stream().map(variationOption ->
+                Feature.builder()
+                        .parameter(variationOption.getVariation().getParameter())
+                        .value(variationOption.getValue())
+                        .build()
+        ).collect(Collectors.toSet());
+    }
+
     @Override
     public Set<ProductItem> transformFromRequest(List<ProductRequest> requests) {
         return requests.stream().map(req -> ProductItem.builder()
@@ -55,15 +64,6 @@ public class ProductMapperImpl implements ProductMapper {
                         .SKU(productItem.getSku())
                         .quantityInStock(productItem.getQuantityInStock())
                         .price(productItem.getPrice())
-                        .build()
-        ).collect(Collectors.toSet());
-    }
-
-    public static Set<Feature> getFeaturesFromVariation(Set<VariationOption> variationOptions) {
-        return variationOptions.stream().map(variationOption ->
-                Feature.builder()
-                        .parameter(variationOption.getVariation().getParameter())
-                        .value(variationOption.getValue())
                         .build()
         ).collect(Collectors.toSet());
     }

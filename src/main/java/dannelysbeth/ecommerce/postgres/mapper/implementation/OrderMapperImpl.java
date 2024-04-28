@@ -48,15 +48,15 @@ public class OrderMapperImpl implements OrderMapper {
         if (orders == null)
             return null;
         return orders.stream().map(order ->
-                OrderResponse.builder()
-                        .username(order.getUser().getUsername())
-                        .items(CartMapperImpl.getCartItemResponsesForOrder(order.getOrderItems()))
-                        .total(order.getOrderTotal())
-                        .shippingAddress(addressMapper.transformAddressToResponse(order.getShippingAddress()))
-                        .orderDate(order.getOrderDate())
-                        .orderStatus(order.getOrderStatus().getDisplayName())
-                        .shippingMethod(order.getShippingMethod().getName())
-                        .build())
+                        OrderResponse.builder()
+                                .username(order.getUser().getUsername())
+                                .items(CartMapperImpl.getCartItemResponsesForOrder(order.getOrderItems()))
+                                .total(order.getOrderTotal())
+                                .shippingAddress(addressMapper.transformAddressToResponse(order.getShippingAddress()))
+                                .orderDate(order.getOrderDate())
+                                .orderStatus(order.getOrderStatus().getDisplayName())
+                                .shippingMethod(order.getShippingMethod().getName())
+                                .build())
                 .collect(Collectors.toSet());
     }
 
