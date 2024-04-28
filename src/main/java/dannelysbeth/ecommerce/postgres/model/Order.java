@@ -1,10 +1,11 @@
 package dannelysbeth.ecommerce.postgres.model;
 
-import dannelysbeth.ecommerce.postgres.enums.OrderStatus;
+import dannelysbeth.ecommerce.postgres.model.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -48,5 +49,9 @@ public class Order {
     @Setter
     @Column(name = "order_status")
     private OrderStatus orderStatus;
+
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "shopOrder")
+    private Set<OrderItem> orderItems;
 
 }

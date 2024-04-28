@@ -1,6 +1,6 @@
 package dannelysbeth.ecommerce.postgres.mapper.definition;
 
-import dannelysbeth.ecommerce.postgres.enums.Role;
+import dannelysbeth.ecommerce.postgres.model.enums.Role;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.UserRequest;
 import dannelysbeth.ecommerce.postgres.model.DTO.response.UserResponse;
 import dannelysbeth.ecommerce.postgres.model.User;

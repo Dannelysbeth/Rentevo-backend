@@ -3,7 +3,7 @@ package dannelysbeth.ecommerce.postgres.auth;
 import dannelysbeth.ecommerce.postgres.auth.DTO.request.AuthenticationRequest;
 import dannelysbeth.ecommerce.postgres.auth.DTO.request.RegisterRequest;
 import dannelysbeth.ecommerce.postgres.auth.DTO.response.AuthenticationResponse;
-import dannelysbeth.ecommerce.postgres.enums.Role;
+import dannelysbeth.ecommerce.postgres.model.enums.Role;
 import dannelysbeth.ecommerce.postgres.exception.EmailExistsException;
 import dannelysbeth.ecommerce.postgres.exception.IncorrectPasswordException;
 import dannelysbeth.ecommerce.postgres.exception.UserNotFoundException;

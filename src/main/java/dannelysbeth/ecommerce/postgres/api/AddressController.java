@@ -1,10 +1,12 @@
 package dannelysbeth.ecommerce.postgres.api;
 
 import dannelysbeth.ecommerce.postgres.mapper.definition.AddressMapper;
+import dannelysbeth.ecommerce.postgres.model.Country;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.AddressRequest;
 import dannelysbeth.ecommerce.postgres.model.DTO.response.AddressResponse;
 import dannelysbeth.ecommerce.postgres.model.User;
 import dannelysbeth.ecommerce.postgres.service.definition.AddressService;
+import dannelysbeth.ecommerce.postgres.service.definition.CountryService;
 import dannelysbeth.ecommerce.postgres.service.definition.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("api/address")
 public class AddressController {
+    private final CountryService countryService;
     private final AddressService addressService;
     private final UserService userService;
     private final AddressMapper addressMapper;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN_ROLE')")
     @GetMapping("/{username}")
     public ResponseEntity<Set<AddressResponse>> getAddresses(@RequestParam(required = false) String city,
                                                              @RequestParam(required = false) String country,
@@ -37,11 +40,12 @@ public class AddressController {
                         .collect(Collectors.toSet()));
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER')")
-    @PostMapping()
-    public ResponseEntity<String> saveOwnAddresses(@RequestBody AddressRequest addressRequest) {
+    @PreAuthorize("hasAnyAuthority('ADMIN_ROLE', 'USER_ROLE')")
+    @PostMapping("/create")
+    public ResponseEntity<String> saveOwnAddresses(@RequestBody AddressRequest request) {
+        Country country = countryService.getCountryByCode(request.getCountry());
         User loggedUser = userService.getLoggedUser();
-        addressService.saveAddress(addressMapper.tranformRequestToAddress(addressRequest, loggedUser));
+        addressService.saveAddress(addressMapper.tranformRequestToAddress(request, loggedUser, country));
         return ResponseEntity.ok()
                 .body("Address successfully saved");
     }

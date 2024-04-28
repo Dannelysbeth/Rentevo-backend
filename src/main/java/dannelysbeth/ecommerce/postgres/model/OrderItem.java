@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Getter
-@Table(name = "order_lines")
-public class OrderLine {
+@Table(name = "order_items")
+public class OrderItem {
     @Id
     @GeneratedValue
     private Long id;

@@ -49,4 +49,20 @@ public class CartServiceImpl implements CartService {
         }
         cartItemRepository.save(cartItem);
     }
+
+    @Override
+    public void emptyCart(Cart cart) {
+
+        cart.setCartItems(null);
+        cartRepository.save(cart);
+        deleteCartItems(cart);
+    }
+
+    private void deleteCartItems(Cart cart) {
+        Set<CartItem> cartItems = cartItemRepository.getByCart_Id(cart.getId());
+        if (cartItems != null) {
+            cartItemRepository.deleteAll(cartItems);
+        }
+
+    }
 }

@@ -1,7 +1,7 @@
 package dannelysbeth.ecommerce.postgres.model;
 
 
-import dannelysbeth.ecommerce.postgres.enums.Role;
+import dannelysbeth.ecommerce.postgres.model.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

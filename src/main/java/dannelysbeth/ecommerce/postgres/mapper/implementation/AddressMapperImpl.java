@@ -2,6 +2,7 @@ package dannelysbeth.ecommerce.postgres.mapper.implementation;
 
 import dannelysbeth.ecommerce.postgres.mapper.definition.AddressMapper;
 import dannelysbeth.ecommerce.postgres.model.Address;
+import dannelysbeth.ecommerce.postgres.model.Country;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.AddressRequest;
 import dannelysbeth.ecommerce.postgres.model.DTO.response.AddressResponse;
 import dannelysbeth.ecommerce.postgres.model.User;
@@ -10,9 +11,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class AddressMapperImpl implements AddressMapper {
     @Override
-    public Address tranformRequestToAddress(AddressRequest request, User user) {
+    public Address tranformRequestToAddress(AddressRequest request, User user, Country country) {
         return Address.builder()
-                .country(request.getCountry())
+                .country(country)
                 .city(request.getCity())
                 .addressLine1(request.getAddressLine1())
                 .addressLine2(request.getAddressLine2())

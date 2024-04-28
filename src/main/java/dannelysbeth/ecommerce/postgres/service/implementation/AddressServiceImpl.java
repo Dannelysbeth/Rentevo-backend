@@ -1,5 +1,6 @@
 package dannelysbeth.ecommerce.postgres.service.implementation;
 
+import dannelysbeth.ecommerce.postgres.exception.AddressNotFoundException;
 import dannelysbeth.ecommerce.postgres.filters.AddressSpecification;
 import dannelysbeth.ecommerce.postgres.model.Address;
 import dannelysbeth.ecommerce.postgres.model.User;
@@ -32,7 +33,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void updateAddress(Long id, Address newAddress) {
-
+    public Address getAddressById(Long id) {
+        return addressRepository.findById(id).orElseThrow(AddressNotFoundException::new);
     }
+
 }
