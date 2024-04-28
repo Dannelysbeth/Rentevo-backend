@@ -1,10 +1,13 @@
 package dannelysbeth.ecommerce.postgres.mapper.implementation;
 
 
-import dannelysbeth.ecommerce.postgres.model.enums.OrderStatus;
+import dannelysbeth.ecommerce.postgres.mapper.definition.AddressMapper;
 import dannelysbeth.ecommerce.postgres.mapper.definition.OrderMapper;
 import dannelysbeth.ecommerce.postgres.model.*;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.OrderRequest;
+import dannelysbeth.ecommerce.postgres.model.DTO.response.OrderResponse;
+import dannelysbeth.ecommerce.postgres.model.enums.OrderStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -12,7 +15,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class OrderMapperImpl implements OrderMapper {
+    private final AddressMapper addressMapper;
 
     @Override
     public Order initOrder(User user) {
@@ -22,6 +27,7 @@ public class OrderMapperImpl implements OrderMapper {
                 .user(user)
                 .build();
     }
+
     @Override
     public Order updateOrderFromRequest(Order order, OrderRequest request, Cart cart, Address shippingAddress, ShippingMethod shippingMethod) {
         Set<OrderItem> orderItems = getItemFromCart(order, cart.getCartItems());
@@ -35,6 +41,23 @@ public class OrderMapperImpl implements OrderMapper {
                 .user(order.getUser())
                 .orderTotal(countTotalPrice(orderItems))
                 .build();
+    }
+
+    @Override
+    public Set<OrderResponse> transformToOrderResponse(Set<Order> orders) {
+        if (orders == null)
+            return null;
+        return orders.stream().map(order ->
+                OrderResponse.builder()
+                        .username(order.getUser().getUsername())
+                        .items(CartMapperImpl.getCartItemResponsesForOrder(order.getOrderItems()))
+                        .total(order.getOrderTotal())
+                        .shippingAddress(addressMapper.transformAddressToResponse(order.getShippingAddress()))
+                        .orderDate(order.getOrderDate())
+                        .orderStatus(order.getOrderStatus().getDisplayName())
+                        .shippingMethod(order.getShippingMethod().getName())
+                        .build())
+                .collect(Collectors.toSet());
     }
 
     private Set<OrderItem> getItemFromCart(Order order, Set<CartItem> cartItems) {

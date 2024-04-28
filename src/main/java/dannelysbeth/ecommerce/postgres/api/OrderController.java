@@ -3,11 +3,14 @@ package dannelysbeth.ecommerce.postgres.api;
 import dannelysbeth.ecommerce.postgres.mapper.definition.OrderMapper;
 import dannelysbeth.ecommerce.postgres.model.*;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.OrderRequest;
+import dannelysbeth.ecommerce.postgres.model.DTO.response.OrderResponse;
 import dannelysbeth.ecommerce.postgres.service.definition.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @CrossOrigin
 @RestController
@@ -42,6 +45,19 @@ public class OrderController {
 
         return ResponseEntity.ok()
                 .body("Order was successfully created");
+    }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN_ROLE', 'USER_ROLE')")
+    @GetMapping("")
+    public ResponseEntity<Set<OrderResponse>> getLoggedUserOrders() {
+        User loggedUser = userService.getLoggedUser();
+
+        Set<Order> orders = orderService.getOrdersByUser(loggedUser.getUsername());
+
+        Set<OrderResponse> orderResponse = orderMapper.transformToOrderResponse(orders) ;
+
+        return ResponseEntity.ok()
+                .body(orderResponse);
     }
 
 }

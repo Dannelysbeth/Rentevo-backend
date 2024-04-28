@@ -59,6 +59,7 @@ public class CartServiceImpl implements CartService {
     public void emptyCart(Cart cart) {
 
         cart.setCartItems(null);
+        cart.setTotal(0);
         cartRepository.save(cart);
         deleteCartItems(cart);
     }

@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Set<Order> getOrdersByUser(String username) {
-        return null;
+        return orderRepository.getByUser_Username(username);
     }
 
     @Override

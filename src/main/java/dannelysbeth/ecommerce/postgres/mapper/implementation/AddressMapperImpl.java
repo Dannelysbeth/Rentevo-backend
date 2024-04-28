@@ -26,12 +26,8 @@ public class AddressMapperImpl implements AddressMapper {
     @Override
     public AddressResponse transformAddressToResponse(Address address) {
         return AddressResponse.builder()
-                .user(AddressResponse.Person.builder()
-                        .firstname(address.getUser().getFirstname())
-                        .lastname(address.getUser().getLastname())
-                        .build())
                 .isDefault(address.isDefault())
-                .country(address.getCountry())
+                .country(address.getCountry().getCountry())
                 .city(address.getCity())
                 .addressLine1(address.getAddressLine1())
                 .addressLine2(address.getAddressLine2())
