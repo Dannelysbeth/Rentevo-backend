@@ -71,4 +71,10 @@ public class BusinessExceptionHandler {
     public ErrorResponse handleShippingMethodNotFoundException(ShippingMethodNotFoundException exception) {
         return new ErrorResponse(exception);
     }
+
+    @ExceptionHandler(NotEnoughProductException.class)
+    @ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
+    public ErrorResponse handleNotEnoughProductException(NotEnoughProductException exception) {
+        return new ErrorResponse(exception);
+    }
 }

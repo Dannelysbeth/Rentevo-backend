@@ -1,5 +1,6 @@
 package dannelysbeth.ecommerce.postgres.service.implementation;
 
+import dannelysbeth.ecommerce.postgres.exception.NotEnoughProductException;
 import dannelysbeth.ecommerce.postgres.factory.definition.JsonProductMapper;
 import dannelysbeth.ecommerce.postgres.filters.ProductSpecification;
 import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
@@ -67,6 +68,9 @@ public class ProductServiceImpl implements ProductService {
             for (OrderItem orderItem : orderItems) {
                 ProductItem item = orderItem.getProductItem();
                 long newQuantity = item.getQuantityInStock() - orderItem.getQty();
+                if (newQuantity < 0) {
+                    throw new NotEnoughProductException();
+                }
                 item.setQuantityInStock(newQuantity);
                 productItems.add(item);
             }
