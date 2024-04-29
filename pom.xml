@@ -86,7 +86,7 @@
     </dependencies>
 
     <build>
-        <finalName>rentevo</finalName>
+        <finalName>postgres-shop</finalName>
         <testSourceDirectory>src/test/java</testSourceDirectory>
         <testOutputDirectory>target/test-classes</testOutputDirectory>
         <plugins>

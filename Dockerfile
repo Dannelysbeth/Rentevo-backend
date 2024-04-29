@@ -1,3 +1,3 @@
 FROM openjdk:21
-ADD target/rentevo.jar rentevo.jar
-ENTRYPOINT ["java","--enable-preview","-jar","/rentevo.jar"]
+ADD target/postgres-shop.jar postgres-shop.jar
+ENTRYPOINT ["java","--enable-preview","-jar","/postgres-shop.jar"]

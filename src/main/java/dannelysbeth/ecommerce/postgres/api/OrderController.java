@@ -23,6 +23,7 @@ public class OrderController {
     private final OrderService orderService;
     private final AddressService addressService;
     private final ShippingMethodService shippingMethodService;
+    private final ProductService productService;
 
     private final OrderMapper orderMapper;
 
@@ -39,6 +40,7 @@ public class OrderController {
         order = orderMapper.updateOrderFromRequest(order, request, cart, shippingAddress, shippingMethod);
 
         orderService.updateOrder(order);
+        productService.decreaseProductItems(order);
         cartService.emptyCart(cart);
 
 

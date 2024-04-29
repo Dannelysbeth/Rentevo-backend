@@ -10,6 +10,4 @@ public interface ProductRepository extends JpaRepository<Product, String>, JpaSp
 
     boolean existsById(String id);
 
-//    Product getById(String id);
-
 }

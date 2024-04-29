@@ -59,6 +59,23 @@ public class ProductServiceImpl implements ProductService {
         return productItemRepository.getById(id);
     }
 
+    @Override
+    public void decreaseProductItems(Order order) {
+        Set<OrderItem> orderItems = order.getOrderItems();
+        Set<ProductItem> productItems = new HashSet<>();
+        if (orderItems != null) {
+            for (OrderItem orderItem : orderItems) {
+                ProductItem item = orderItem.getProductItem();
+                long newQuantity = item.getQuantityInStock() - orderItem.getQty();
+                item.setQuantityInStock(newQuantity);
+                productItems.add(item);
+            }
+            productItemRepository.saveAll(productItems);
+        }
+    }
+
+
+
     private Product saveProduct(Product product) {
         if (!this.productRepository.existsById(product.getId())) {
             ProductCategory category = saveProductCategory(product.getCategory());
