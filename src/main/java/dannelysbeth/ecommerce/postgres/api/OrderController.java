@@ -1,11 +1,13 @@
 package dannelysbeth.ecommerce.postgres.api;
 
+import dannelysbeth.ecommerce.postgres.exception.NotEnoughProductException;
 import dannelysbeth.ecommerce.postgres.mapper.definition.OrderMapper;
 import dannelysbeth.ecommerce.postgres.model.*;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.OrderRequest;
 import dannelysbeth.ecommerce.postgres.model.DTO.response.OrderResponse;
 import dannelysbeth.ecommerce.postgres.service.definition.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -39,13 +41,19 @@ public class OrderController {
         Address shippingAddress = addressService.getAddressById(request.getAddressId());
         order = orderMapper.updateOrderFromRequest(order, request, cart, shippingAddress, shippingMethod);
 
-        orderService.updateOrder(order);
-        productService.decreaseProductItems(order);
-        cartService.emptyCart(cart);
+        try {
+            productService.decreaseProductItems(order);
+            orderService.updateOrder(order);
+            cartService.emptyCart(cart);
+            return ResponseEntity.ok()
+                    .body("Order was successfully created");
 
+        } catch(NotEnoughProductException ex) {
+            orderService.deleteOrder(order);
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
+                    .body("Not enough products in store");
+        }
 
-        return ResponseEntity.ok()
-                .body("Order was successfully created");
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN_ROLE', 'USER_ROLE')")

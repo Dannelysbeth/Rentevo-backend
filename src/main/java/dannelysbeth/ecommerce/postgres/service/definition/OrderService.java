@@ -17,4 +17,6 @@ public interface OrderService {
     void updateOrder(Order order);
 
     void payForOrder(Long orderId, UserPaymentMethod userPaymentMethod);
+
+    void deleteOrder(Order order);
 }
