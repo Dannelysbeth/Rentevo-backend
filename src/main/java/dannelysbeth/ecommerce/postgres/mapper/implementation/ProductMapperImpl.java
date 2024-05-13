@@ -26,31 +26,39 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public Set<Product> transformFromRequest(List<ProductRequest> requests) {
-        return requests.stream().map(req -> {
+    public Set<ProductItem> transformFromRequest(List<ProductRequest> requests) {
+        Set<ProductItem> productItems = new HashSet<>();
+        requests.forEach(req -> {
             Product product = Product.builder()
-                            .id(req.getProductCode())
-                            .category(getCategory(req.getCategory()))
-                            .description(req.getDescription())
-                            .price(req.getPrice())
-                            .name(req.getName())
-                            .build();
-
-            Set<ProductItem> items = getProductItemsFrom(req, product);
-            product.setProductItems(items);
-            return product;
-        }).collect(Collectors.toSet());
+                    .id(req.getProductCode())
+                    .category(getCategory(req.getCategory()))
+                    .description(req.getDescription())
+                    .price(req.getPrice())
+                    .name(req.getName())
+                    .build();
+            req.getProductItems().forEach(itemReq -> {
+                ProductItem item = ProductItem.builder()
+                        .variationOptions(getVariationOptionsFromFeatures(itemReq.getFeatures()))
+                        .sku(itemReq.getSKU())
+                        .product(product)
+                        .quantityInStock(itemReq.getQuantityInStock())
+                        .price(itemReq.getPrice())
+                        .build();
+                productItems.add(item);
+            });
+        });
+        return productItems;
     }
 
     private Set<ProductItem> getProductItemsFrom(ProductRequest request, Product product) {
         Set<ProductItem> items = new HashSet<>();
-        return request.getProductItems().stream().map(itemReq-> ProductItem.builder()
-                        .price(itemReq.getPrice())
-                        .quantityInStock(itemReq.getQuantityInStock())
-                        .product(product)
-                        .quantityInStock(itemReq.getQuantityInStock())
-                        .variationOptions(getVariationOptionsFromFeatures(itemReq.getFeatures()))
-                        .build()
+        return request.getProductItems().stream().map(itemReq -> ProductItem.builder()
+                .price(itemReq.getPrice())
+                .quantityInStock(itemReq.getQuantityInStock())
+                .product(product)
+                .quantityInStock(itemReq.getQuantityInStock())
+                .variationOptions(getVariationOptionsFromFeatures(itemReq.getFeatures()))
+                .build()
         ).collect(Collectors.toSet());
     }
 

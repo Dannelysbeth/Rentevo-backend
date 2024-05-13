@@ -4,6 +4,7 @@ import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
 import dannelysbeth.ecommerce.postgres.model.DTO.response.GlobalResponse;
 import dannelysbeth.ecommerce.postgres.model.DTO.response.ProductResponse;
+import dannelysbeth.ecommerce.postgres.model.Product;
 import dannelysbeth.ecommerce.postgres.model.ProductItem;
 import dannelysbeth.ecommerce.postgres.service.definition.ProductService;
 import lombok.RequiredArgsConstructor;
