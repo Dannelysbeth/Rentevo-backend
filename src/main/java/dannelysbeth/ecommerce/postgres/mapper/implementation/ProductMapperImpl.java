@@ -26,20 +26,32 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public Set<ProductItem> transformFromRequest(List<ProductRequest> requests) {
-        return requests.stream().map(req -> ProductItem.builder()
-                .product(Product.builder()
-                        .id(req.getProductCode())
-                        .category(getCategory(req.getCategory()))
-                        .description(req.getDescription())
-                        .price(req.getPrice())
-                        .name(req.getName())
-                        .build())
-                .sku(req.getSKU())
-                .variationOptions(getVariationOptionsFromFeatures(req.getFeatures()))
-                .quantityInStock(req.getQuantityInStock())
-                .price(req.getPrice())
-                .build()).collect(Collectors.toSet());
+    public Set<Product> transformFromRequest(List<ProductRequest> requests) {
+        return requests.stream().map(req -> {
+            Product product = Product.builder()
+                            .id(req.getProductCode())
+                            .category(getCategory(req.getCategory()))
+                            .description(req.getDescription())
+                            .price(req.getPrice())
+                            .name(req.getName())
+                            .build();
+
+            Set<ProductItem> items = getProductItemsFrom(req, product);
+            product.setProductItems(items);
+            return product;
+        }).collect(Collectors.toSet());
+    }
+
+    private Set<ProductItem> getProductItemsFrom(ProductRequest request, Product product) {
+        Set<ProductItem> items = new HashSet<>();
+        return request.getProductItems().stream().map(itemReq-> ProductItem.builder()
+                        .price(itemReq.getPrice())
+                        .quantityInStock(itemReq.getQuantityInStock())
+                        .product(product)
+                        .quantityInStock(itemReq.getQuantityInStock())
+                        .variationOptions(getVariationOptionsFromFeatures(itemReq.getFeatures()))
+                        .build()
+        ).collect(Collectors.toSet());
     }
 
     @Override
@@ -68,7 +80,7 @@ public class ProductMapperImpl implements ProductMapper {
         ).collect(Collectors.toSet());
     }
 
-    private Set<VariationOption> getVariationOptionsFromFeatures(List<Feature> features) {
+    private Set<VariationOption> getVariationOptionsFromFeatures(Set<Feature> features) {
         Set<VariationOption> variationOptionSet = new HashSet<>();
         for (Feature feature : features) {
             VariationOption build = VariationOption.builder()

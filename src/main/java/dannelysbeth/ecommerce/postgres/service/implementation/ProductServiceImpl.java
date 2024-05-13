@@ -35,8 +35,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void importFromFile(MultipartFile file) {
         List<ProductRequest> productsReq = this.jsonProductMapper.readFromFile(file);
-        Set<ProductItem> products = this.productMapper.transformFromRequest(productsReq);
-        this.productItemRepository.saveAll(products);
+        Set<Product> products = this.productMapper.transformFromRequest(productsReq);
+        this.productRepository.saveAll(products);
+
+        for (Product product : products) {
+            saveMany(product.getProductItems());
+        }
     }
 
     @Override

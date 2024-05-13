@@ -14,7 +14,7 @@ import java.util.Set;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface ProductMapper {
 
-    Set<ProductItem> transformFromRequest(List<ProductRequest> requests);
+    Set<Product> transformFromRequest(List<ProductRequest> requests);
 
     Set<ProductItemResponse> transformToProductItemResponse(Set<ProductItem> productItems);
 

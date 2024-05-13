@@ -1,10 +1,9 @@
 package dannelysbeth.ecommerce.postgres.model.DTO.request;
 
-import dannelysbeth.ecommerce.postgres.model.DTO.Feature;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -17,15 +16,11 @@ public class ProductRequest {
 
     String description;
 
-    double price;
-
     String category;
 
-    List<Feature> features;
+    double price;
 
-    long quantityInStock;
-
-    String SKU;
+    Set<ProductItemRequest> productItems;
 
 }
 
