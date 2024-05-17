@@ -6,6 +6,8 @@ import dannelysbeth.ecommerce.postgres.model.User;
 
 public interface CartService {
 
+    double getRepositoryResponseTime();
+
     Cart getCartByUser(User user);
 
     void saveCart(Cart cart);

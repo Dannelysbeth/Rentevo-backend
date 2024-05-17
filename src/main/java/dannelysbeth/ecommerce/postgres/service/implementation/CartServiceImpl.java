@@ -8,6 +8,7 @@ import dannelysbeth.ecommerce.postgres.repository.CartRepository;
 import dannelysbeth.ecommerce.postgres.service.definition.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import java.util.Objects;
 import java.util.Set;
@@ -18,6 +19,13 @@ public class CartServiceImpl implements CartService {
 
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
+
+    private final StopWatch watch = new StopWatch();
+
+    @Override
+    public double getRepositoryResponseTime() {
+        return this.watch.getTotalTimeMillis();
+    }
 
     @Override
     public Cart getCartByUser(User user) {
@@ -31,7 +39,9 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void saveCart(Cart cart) {
+        this.watch.start();
         cartRepository.save(cart);
+        this.watch.stop();
     }
 
     @Override

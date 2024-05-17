@@ -48,10 +48,12 @@ public class ProductSpecification {
     public static Specification<Product> hasCategories(List<String> categories) {
         List<Predicate> predicates = new ArrayList<>();
         return (root, query, builder) -> {
-            for (String value : categories) {
-                predicates.add(builder.equal(root.get(CATEGORY).get("name"), value));
+            if (categories != null && !categories.isEmpty()) {
+                for (String value : categories) {
+                    predicates.add(builder.equal(root.get(CATEGORY).get("name"), value));
+                }
             }
-            return builder.or(predicates.toArray(new Predicate[0]));
+            return categories == null ? builder.conjunction() : builder.or(predicates.toArray(new Predicate[0]));
         };
     }
 

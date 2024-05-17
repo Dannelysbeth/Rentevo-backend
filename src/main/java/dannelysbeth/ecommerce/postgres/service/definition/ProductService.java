@@ -10,11 +10,11 @@ import java.util.Set;
 
 public interface ProductService {
 
+    double getRepositoryResponseTime();
+
     void importFromFile(MultipartFile file);
 
     void saveMany(Set<ProductItem> productItems);
-
-    void saveManyProducts(Set<Product> products);
 
     Set<Product> getProducts(Double priceStartsAt, Double priceEndsAt, Long quantity, List<String> category, List<String> color, List<String> size);
 

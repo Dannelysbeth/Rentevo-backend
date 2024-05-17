@@ -11,6 +11,7 @@ import dannelysbeth.ecommerce.postgres.repository.OrderRepository;
 import dannelysbeth.ecommerce.postgres.service.definition.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import java.util.Set;
 
@@ -23,6 +24,13 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemRepository orderItemRepository;
 
     private final OrderMapper orderMapper;
+
+    StopWatch watch = new StopWatch();
+
+    @Override
+    public double getRepositoryResponseTime() {
+        return this.watch.getTotalTimeMillis();
+    }
 
     @Override
     public Set<Order> getOrdersByUserAndStatus(String username, OrderStatus orderStatus) {

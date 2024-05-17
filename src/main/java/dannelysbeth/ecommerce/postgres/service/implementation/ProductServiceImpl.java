@@ -11,6 +11,7 @@ import dannelysbeth.ecommerce.postgres.service.definition.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
@@ -31,6 +32,13 @@ public class ProductServiceImpl implements ProductService {
     private final JsonProductMapper jsonProductMapper;
     private final ProductMapper productMapper;
 
+    private StopWatch watch = new StopWatch();
+
+    @Override
+    public double getRepositoryResponseTime() {
+        return this.watch.getTotalTimeMillis();
+    }
+
 
     @Override
     public void importFromFile(MultipartFile file) {
@@ -41,27 +49,34 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void saveMany(Set<ProductItem> productItems) {
+        this.watch = new StopWatch();
+        watch.start();
         productItems.forEach(item -> {
             Product product = saveProduct(item.getProduct());
             item.setProduct(product);
             item.setVariationOptions(saveVariationOptions(item.getVariationOptions()));
             this.productItemRepository.save(item);
         });
-    }
-    @Override
-    public void saveManyProducts(Set<Product> products) {
-        products.forEach(prod->saveMany(prod.getProductItems()));
+        this.watch.stop();
     }
 
     @Override
     public Set<Product> getProducts(Double priceStartsAt, Double priceEndsAt, Long quantity, List<String> category, List<String> color, List<String> size) {
+        this.watch = new StopWatch();
+        watch.start();
         Specification<Product> filters = ProductSpecification.filterBy(priceStartsAt, priceEndsAt, quantity, category, color, size);
-        return new HashSet<>(productRepository.findAll(filters));
+        Set<Product> products = new HashSet<>(productRepository.findAll(filters));
+        this.watch.stop();
+        return products;
     }
 
     @Override
     public ProductItem getProductItemById(Long id) {
-        return productItemRepository.getById(id);
+        this.watch = new StopWatch();
+        watch.start();
+        ProductItem productItem = productItemRepository.getById(id);
+        this.watch.stop();
+        return productItem;
     }
 
     @Override
@@ -78,7 +93,10 @@ public class ProductServiceImpl implements ProductService {
                 item.setQuantityInStock(newQuantity);
                 productItems.add(item);
             }
+            this.watch = new StopWatch();
+            watch.start();
             productItemRepository.saveAll(productItems);
+            this.watch.stop();
         }
     }
 
@@ -90,7 +108,7 @@ public class ProductServiceImpl implements ProductService {
             product.setCategory(category);
             return this.productRepository.save(product);
         }
-        return this.productRepository.getById(product.getId());
+        return this.productRepository.findById(product.getId()).orElse(null);
     }
 
     private Set<VariationOption> saveVariationOptions(Set<VariationOption> variationOptions) {

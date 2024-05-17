@@ -8,6 +8,9 @@ import dannelysbeth.ecommerce.postgres.model.enums.OrderStatus;
 import java.util.Set;
 
 public interface OrderService {
+
+    double getRepositoryResponseTime();
+
     Set<Order> getOrdersByUserAndStatus(String username, OrderStatus orderStatus);
 
     Set<Order> getOrdersByUser(String username);
