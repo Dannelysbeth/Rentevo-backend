@@ -37,11 +37,11 @@ public class ProductSpecification {
         return (root, query, builder) -> price == null ? builder.conjunction() : builder.lessThan(root.get(PRICE), price);
     }
 
-    public static Specification<Product> hasMinQuantity(long minQuantityInStock) {
+    public static Specification<Product> hasMinQuantity(Long minQuantityInStock) {
         return (root, query, builder) ->
         {
             Join<ProductItem, Product> productItems = root.join("productItems");
-            return builder.greaterThan(productItems.get("quantityInStock"), minQuantityInStock);
+            return minQuantityInStock == null ? builder.conjunction() : builder.greaterThan(productItems.get("quantityInStock"), minQuantityInStock);
         };
     }
 

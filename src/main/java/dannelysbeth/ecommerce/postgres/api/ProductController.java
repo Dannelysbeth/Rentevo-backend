@@ -54,7 +54,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<GlobalResponse> findAll(@RequestParam(required = false) Double lte,
                                                   @RequestParam(required = false) Double gte,
-                                                  @RequestParam(defaultValue = "1") Long minQuantity,
+                                                  @RequestParam(required = false) Long minQuantity,
                                                   @RequestParam(required = false) String[] category,
                                                   @RequestParam(required = false) String[] color,
                                                   @RequestParam(required = false) String... size) {
