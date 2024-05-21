@@ -17,6 +17,12 @@ public class ProductSpecification {
     public static final String PRICE = "price";
     public static final String CATEGORY = "category";
     public static final String VALUE = "value";
+    public static final String QUANTITY_IN_STOCK = "quantityInStock";
+
+    public static final String PRODUCT_ITEMS = "productItems";
+    public static final String VARIATION = "variationOptions";
+
+    public static final String NAME = "name";
 
     public static Specification<Product> filterBy(Double lowerPrice, Double higherPrice, Long minQuantity, List<String> category, List<String> colors, List<String> sizes) {
         return Specification
@@ -40,8 +46,8 @@ public class ProductSpecification {
     public static Specification<Product> hasMinQuantity(Long minQuantityInStock) {
         return (root, query, builder) ->
         {
-            Join<ProductItem, Product> productItems = root.join("productItems");
-            return minQuantityInStock == null ? builder.conjunction() : builder.greaterThan(productItems.get("quantityInStock"), minQuantityInStock);
+            Join<ProductItem, Product> productItems = root.join(PRODUCT_ITEMS);
+            return minQuantityInStock == null ? builder.conjunction() : builder.greaterThan(productItems.get(QUANTITY_IN_STOCK), minQuantityInStock);
         };
     }
 
@@ -50,7 +56,7 @@ public class ProductSpecification {
         return (root, query, builder) -> {
             if (categories != null && !categories.isEmpty()) {
                 for (String value : categories) {
-                    predicates.add(builder.equal(root.get(CATEGORY).get("name"), value));
+                    predicates.add(builder.equal(root.get(CATEGORY).get(NAME), value));
                 }
             }
             return categories == null ? builder.conjunction() : builder.or(predicates.toArray(new Predicate[0]));
@@ -59,8 +65,8 @@ public class ProductSpecification {
 
     public static Specification<Product> hasValues(List<String> values) {
         return (root, query, builder) -> {
-            Join<ProductItem, Product> productItems = root.join("productItems", JoinType.INNER);
-            Join<VariationOption, ProductItem> variations = productItems.join("variationOptions", JoinType.INNER);
+            Join<ProductItem, Product> productItems = root.join(PRODUCT_ITEMS, JoinType.INNER);
+            Join<VariationOption, ProductItem> variations = productItems.join(VARIATION, JoinType.INNER);
 
             List<Predicate> predicates = new ArrayList<>();
             if (values != null && !values.isEmpty()) {
