@@ -39,25 +39,33 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Set<Order> getOrdersByUser(String username) {
+
         return orderRepository.getByUser_Username(username);
     }
 
     @Override
     public Order createOrder(User user) {
         Order order = orderMapper.initOrder(user);
-        return orderRepository.save(order);
+        watch.start();
+        order = orderRepository.save(order);
+        watch.stop();
+        return order;
     }
 
     @Override
     public void updateOrder(Order order) {
         saveOrderItems(order.getOrderItems());
+        watch.start();
         orderRepository.save(order);
+        watch.stop();
 
 
     }
 
     private void saveOrderItems(Set<OrderItem> orderItems) {
+        watch.start();
         orderItemRepository.saveAll(orderItems);
+        watch.stop();
     }
 
     @Override
@@ -68,6 +76,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(Order order) {
+        watch.start();
         orderRepository.delete(order);
+        watch.stop();
     }
 }

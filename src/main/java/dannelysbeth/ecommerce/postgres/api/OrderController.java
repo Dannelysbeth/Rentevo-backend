@@ -4,6 +4,7 @@ import dannelysbeth.ecommerce.postgres.exception.NotEnoughProductException;
 import dannelysbeth.ecommerce.postgres.mapper.definition.OrderMapper;
 import dannelysbeth.ecommerce.postgres.model.*;
 import dannelysbeth.ecommerce.postgres.model.DTO.request.OrderRequest;
+import dannelysbeth.ecommerce.postgres.model.DTO.response.GlobalResponse;
 import dannelysbeth.ecommerce.postgres.model.DTO.response.OrderResponse;
 import dannelysbeth.ecommerce.postgres.service.definition.*;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Set;
 
 @CrossOrigin
@@ -32,26 +34,39 @@ public class OrderController {
 
     @PreAuthorize("hasAnyAuthority('ADMIN_ROLE', 'USER_ROLE')")
     @PostMapping("/create")
-    public ResponseEntity<String> createOrder(@RequestBody OrderRequest request) {
+    public ResponseEntity<GlobalResponse> createOrder(@RequestBody OrderRequest request) {
         User loggedUser = userService.getLoggedUser();
         Cart cart = cartService.getCartByUser(loggedUser);
+        double time = cartService.getRepositoryResponseTime();
         ShippingMethod shippingMethod = shippingMethodService.getShippingMethodByCode(request.getShippingMethod());
         Order order = orderService.createOrder(loggedUser);
+        time += orderService.getRepositoryResponseTime();
 
         Address shippingAddress = addressService.getAddressById(request.getAddressId());
         order = orderMapper.updateOrderFromRequest(order, request, cart, shippingAddress, shippingMethod);
 
         try {
             productService.decreaseProductItems(order);
+            time += productService.getRepositoryResponseTime();
             orderService.updateOrder(order);
+            time += orderService.getRepositoryResponseTime();
             cartService.emptyCart(cart);
+            time += cartService.getRepositoryResponseTime();
             return ResponseEntity.ok()
-                    .body("Order was successfully created");
+                    .body(GlobalResponse.builder()
+                            .responseTime(time+"ms")
+                            .entries(Collections.singleton("Order was successfully created"))
+                                    .build()
+                            );
 
         } catch(NotEnoughProductException ex) {
             orderService.deleteOrder(order);
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                    .body("Not enough products in store");
+                    .body(GlobalResponse.builder()
+                            .responseTime(time+"ms")
+                            .entries(Collections.singleton("Order was successfully created"))
+                            .build()
+                    );
         }
 
     }
