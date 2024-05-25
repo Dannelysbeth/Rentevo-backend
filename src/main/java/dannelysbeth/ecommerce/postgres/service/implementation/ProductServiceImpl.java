@@ -51,9 +51,9 @@ public class ProductServiceImpl implements ProductService {
         this.watch = new StopWatch();
         watch.start();
         Specification<Product> filters = ProductSpecification.filterBy(priceStartsAt, priceEndsAt, quantity, category, color, size);
-        Set<Product> products = new HashSet<>(productRepository.findAll(filters));
+        List<Product> products = productRepository.findAll(filters);
         this.watch.stop();
-        return products;
+        return new HashSet<>(products);
     }
 
     @Override

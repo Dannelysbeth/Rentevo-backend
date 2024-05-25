@@ -26,21 +26,21 @@ public class ProductSpecification {
 
     public static Specification<Product> filterBy(Double lowerPrice, Double higherPrice, Long minQuantity, List<String> category, List<String> colors, List<String> sizes) {
         return Specification
-                .where(hasLowerPriceThan(higherPrice))
-                .and(hasGreaterPriceThan(lowerPrice))
-                .and(hasMinQuantity(minQuantity))
-                .and(hasCategories(category))
-                .and(hasValues(colors))
-                .and(hasValues(sizes))
+                .where(higherPrice == null ? null : hasLowerPriceThan(higherPrice))
+                .and(lowerPrice == null ? null : hasGreaterPriceThan(lowerPrice))
+                .and(minQuantity == null ? null : hasMinQuantity(minQuantity))
+                .and(category == null ? null : hasCategories(category))
+                .and(colors == null ? null : hasValues(colors))
+                .and(sizes == null ? null : hasValues(sizes))
                 ;
     }
 
     public static Specification<Product> hasLowerPriceThan(Double price) {
-        return (root, query, builder) -> price == null ? builder.conjunction() : builder.lessThan(root.get(PRICE), price);
+        return (root, query, builder) -> price == null ? builder.conjunction() : builder.greaterThanOrEqualTo(root.get(PRICE), price);
     }
 
     public static Specification<Product> hasGreaterPriceThan(Double price) {
-        return (root, query, builder) -> price == null ? builder.conjunction() : builder.lessThan(root.get(PRICE), price);
+        return (root, query, builder) -> price == null ? builder.conjunction() : builder.lessThanOrEqualTo(root.get(PRICE), price);
     }
 
     public static Specification<Product> hasMinQuantity(Long minQuantityInStock) {

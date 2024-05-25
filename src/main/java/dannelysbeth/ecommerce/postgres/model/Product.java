@@ -16,7 +16,7 @@ public class Product {
     private String id;
 
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private ProductCategory category;
 
@@ -35,6 +35,5 @@ public class Product {
     @Setter
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     private Set<ProductItem> productItems;
-
 
 }
