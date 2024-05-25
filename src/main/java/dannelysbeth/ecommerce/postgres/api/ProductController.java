@@ -73,4 +73,12 @@ public class ProductController {
 
 
     }
+
+    @PreAuthorize("hasAnyAuthority('ADMIN_ROLE')")
+    @DeleteMapping("/deleteAll")
+    public ResponseEntity<String> deleteAllProducts() {
+        this.productService.deleteAll();
+        return ResponseEntity.ok()
+                .body("Items successfully deleted");
+    }
 }

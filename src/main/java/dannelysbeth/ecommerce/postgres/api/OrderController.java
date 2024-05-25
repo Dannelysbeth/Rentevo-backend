@@ -54,16 +54,16 @@ public class OrderController {
             time += cartService.getRepositoryResponseTime();
             return ResponseEntity.ok()
                     .body(GlobalResponse.builder()
-                            .responseTime(time+"ms")
+                            .responseTime(time + "ms")
                             .entries(Collections.singleton("Order was successfully created"))
-                                    .build()
-                            );
+                            .build()
+                    );
 
-        } catch(NotEnoughProductException ex) {
+        } catch (NotEnoughProductException ex) {
             orderService.deleteOrder(order);
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
                     .body(GlobalResponse.builder()
-                            .responseTime(time+"ms")
+                            .responseTime(time + "ms")
                             .entries(Collections.singleton("Order was successfully created"))
                             .build()
                     );
@@ -83,5 +83,6 @@ public class OrderController {
         return ResponseEntity.ok()
                 .body(orderResponse);
     }
+
 
 }

@@ -1,10 +1,7 @@
 package dannelysbeth.ecommerce.postgres.service.implementation;
 
 import dannelysbeth.ecommerce.postgres.exception.NotEnoughProductException;
-import dannelysbeth.ecommerce.postgres.factory.definition.JsonProductMapper;
 import dannelysbeth.ecommerce.postgres.filters.ProductSpecification;
-import dannelysbeth.ecommerce.postgres.mapper.definition.ProductMapper;
-import dannelysbeth.ecommerce.postgres.model.DTO.request.ProductRequest;
 import dannelysbeth.ecommerce.postgres.model.*;
 import dannelysbeth.ecommerce.postgres.repository.*;
 import dannelysbeth.ecommerce.postgres.service.definition.ProductService;
@@ -12,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StopWatch;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.List;
@@ -29,9 +25,6 @@ public class ProductServiceImpl implements ProductService {
     private final VariationOptionRepository variationOptionRepository;
     private final CategoryRepository categoryRepository;
 
-    private final JsonProductMapper jsonProductMapper;
-    private final ProductMapper productMapper;
-
     private StopWatch watch = new StopWatch();
 
     @Override
@@ -39,13 +32,6 @@ public class ProductServiceImpl implements ProductService {
         return this.watch.getTotalTimeMillis();
     }
 
-
-    @Override
-    public void importFromFile(MultipartFile file) {
-        List<ProductRequest> productsReq = this.jsonProductMapper.readFromFile(file);
-        Set<ProductItem> products = this.productMapper.transformFromRequest(productsReq);
-        saveMany(products);
-    }
 
     @Override
     public void saveMany(Set<ProductItem> productItems) {
@@ -100,6 +86,11 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public void deleteAll() {
+        productItemRepository.deleteAll();
+        productRepository.deleteAll();
+    }
 
 
     private Product saveProduct(Product product) {
