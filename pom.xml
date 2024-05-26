@@ -11,8 +11,8 @@
     <groupId>dannelysbeth.rentevo.postgres</groupId>
     <artifactId>rentevo_backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rentevo_backend_postgres</name>
-    <description>rentevo_backend_postgres</description>
+    <name>postgres-shop</name>
+    <description>Simple REST API shop application with PostgresSQL database</description>
     <properties>
         <java.version>21</java.version>
     </properties>
@@ -31,11 +31,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -99,6 +94,16 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/RentevoBackendPostgresApplicationTests.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>
