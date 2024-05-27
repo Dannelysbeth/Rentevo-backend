@@ -33,20 +33,19 @@ public class CartController {
     @PreAuthorize("hasAnyAuthority('ADMIN_ROLE', 'USER_ROLE')")
     @PostMapping("/addItem/{id}")
     public ResponseEntity<GlobalResponse> addItemToCart(@PathVariable Long id) {
-        double miliSec = 0;
         ProductItem productItem = productService.getProductItemById(id);
-        miliSec = productService.getRepositoryResponseTime();
+        double milliSec = productService.getRepositoryResponseTime();
         User loggedUser = userService.getLoggedUser();
         Cart myCart = cartService.getCartByUser(loggedUser);
-        miliSec += cartService.getRepositoryResponseTime();
+        milliSec += cartService.getRepositoryResponseTime();
         CartItem cartItem = cartMapper.getCartItemFromProductItem(productItem, myCart);
 
         this.cartService.addItemToCart(myCart, cartItem);
-        miliSec += cartService.getRepositoryResponseTime();
+        milliSec += cartService.getRepositoryResponseTime();
         return ResponseEntity.ok()
                 .body(GlobalResponse.builder()
                         .entries(new HashSet<>(Collections.singleton("Item was added to cart")))
-                        .responseTime(productService.getRepositoryResponseTime()+"ms")
+                        .responseTime(milliSec + "ms")
                         .build());
     }
 
