@@ -25,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
     private final VariationOptionRepository variationOptionRepository;
     private final CategoryRepository categoryRepository;
 
-    private StopWatch watch = new StopWatch();
+    private StopWatch watch;
 
     @Override
     public double getRepositoryResponseTime() {

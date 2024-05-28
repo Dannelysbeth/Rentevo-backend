@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderMapper orderMapper;
 
-    StopWatch watch = new StopWatch();
+    private StopWatch watch;
 
     @Override
     public double getRepositoryResponseTime() {
@@ -46,6 +46,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order createOrder(User user) {
         Order order = orderMapper.initOrder(user);
+        watch = new StopWatch();
         watch.start();
         order = orderRepository.save(order);
         watch.stop();
@@ -55,6 +56,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void updateOrder(Order order) {
         saveOrderItems(order.getOrderItems());
+        watch = new StopWatch();
         watch.start();
         orderRepository.save(order);
         watch.stop();
@@ -63,6 +65,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     private void saveOrderItems(Set<OrderItem> orderItems) {
+        watch = new StopWatch();
         watch.start();
         orderItemRepository.saveAll(orderItems);
         watch.stop();
@@ -76,6 +79,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(Order order) {
+        watch = new StopWatch();
         watch.start();
         orderRepository.delete(order);
         watch.stop();
