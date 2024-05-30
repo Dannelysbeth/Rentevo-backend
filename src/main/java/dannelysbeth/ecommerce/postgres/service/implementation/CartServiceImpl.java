@@ -20,7 +20,7 @@ public class CartServiceImpl implements CartService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
 
-    private StopWatch watch ;
+    private StopWatch watch;
 
     @Override
     public double getRepositoryResponseTime() {
