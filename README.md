@@ -50,5 +50,18 @@ The response to this request has a status code of 200 and a content type of `tex
 
  ```
 
-Documentation TODO
+](http://localhost:9000/api/product/import)
+### Import Product
+
+This endpoint allows the user to import a product using a POST request to the specified URL.
+
+#### Request Body
+
+- form-data
+    - `file` (file): The file containing the product data to be imported.
+        
+
+#### Response
+
+The response of this request is a JSON schema representing the structure of the data returned upon importing the product.
 
