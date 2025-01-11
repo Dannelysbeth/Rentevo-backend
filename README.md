@@ -64,15 +64,6 @@ Follow the instructions below to set up and run the project locally.
 
 ---
 
-## Running Tests
-
-You can run the test suite using the following command:
-```bash
-mvn test
-```
-
----
-
 ## API Endpoints
 
 ### **Product Management**
