@@ -44,11 +44,11 @@ Follow the instructions below to set up and run the project locally.
    ```
 
 2. **Set Up the Database**:
-  - Ensure that a PostgreSQL database is running.
-  - Update the database credentials in `application.properties`:
-    - `spring.datasource.url`
-    - `spring.datasource.username`
-    - `spring.datasource.password`
+    - Ensure that a PostgreSQL database is running.
+    - Update the database credentials in `application.properties`:
+        - `spring.datasource.url`
+        - `spring.datasource.username`
+        - `spring.datasource.password`
 
 3. **Build the Project**:
    ```bash
@@ -61,15 +61,6 @@ Follow the instructions below to set up and run the project locally.
    ```
 
 5. The application will be available at: `http://localhost:9000`.
-
----
-
-## Running Tests
-
-You can run the test suite using the following command:
-```bash
-mvn test
-```
 
 ---
 
@@ -101,14 +92,14 @@ Add a new product using the `/product/add` endpoint.
   }
   ```
 - **Response**:
-  - **Status Code**: 200
-  - **Example JSON**:
-    ```json
-    {
-      "status": 200,
-      "message": "Product added successfully."
-    }
-    ```
+    - **Status Code**: 200
+    - **Example JSON**:
+      ```json
+      {
+        "status": 200,
+        "message": "Product added successfully."
+      }
+      ```
 
 #### 2. Import Products
 Import products using the `/product/import` endpoint by uploading a file.
@@ -116,7 +107,7 @@ Import products using the `/product/import` endpoint by uploading a file.
 - **Method**: `POST`
 - **URL**: `/api/product/import`
 - **Request Body**: Form-data
-  - `file`: The file containing product data.
+    - `file`: The file containing product data.
 
 - **Response**:
   ```json
@@ -147,6 +138,26 @@ The project focuses on the following critical scenarios to ensure proper functio
 
 ---
 
+## Contributing
+
+We welcome contributions to this project! Follow the steps below to submit your changes:
+
+1. Fork the repository.
+2. Create a new feature branch:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add your commit message here"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+5. Create a pull request to the main branch.
+
+---
 
 ## License
 
